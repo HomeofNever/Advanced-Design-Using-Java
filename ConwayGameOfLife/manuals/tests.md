@@ -8,13 +8,13 @@ A Java framework, JUnit5, has been used within the process. You may consult to `
 
 ### Included Sections
 
-- getters/setters
+- row/col length getters
 - class constructor
-- `getCell` with wrapping
-- `neighbour` live cell counts with wrapping
-- `toString` format test
+- `getCell` cell status with coordinate wrapping
+- `neighbour` live cell counts around specific coordinates
+- `toString` string representation/output format
 
-The above have tested class's construction, mutation, and expected string representation.
+The above have tested class's construction, mutations, and expected string representation.
 
 ### Run Unit Test 
 
@@ -71,7 +71,7 @@ These cases have covered the following topics:
 - invalid2.txt -> Seed file with < 2 columns
 - invalid3.txt -> Seed file with undefined char
 - invalid4.txt -> Seed file with inconsistent rows
-- invalid5.txt -> empty seed file
+- invalid5.txt -> Empty seed file
 
 Commands to run these examples have also listed in the manual. It is believed that these cases cover most of the common mistakes that users would make.
 

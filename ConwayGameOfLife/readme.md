@@ -28,7 +28,7 @@ OpenJDK 64-Bit Server VM (build 15.0.1+0-adhoc..jdk15u-jdk-15.0.1-ga, mixed mode
 
 #### Nix
 
-If you want to have `Nix` installed, you may use `nix-shell` and it will set up development environment for you. 
+If you have `Nix` installed, you may use `nix-shell` and it will set up development environment for you. 
 
 ### Windows
 
