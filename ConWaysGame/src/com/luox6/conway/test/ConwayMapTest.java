@@ -15,6 +15,7 @@ class ConwayMapTest {
         c = new ConwayMap(10, 10);
         c.setCell(0,0, ConwayMap.LIVE_CELL);
         c.setCell(1, 1, ConwayMap.LIVE_CELL);
+        c.setCell(9, 1, ConwayMap.LIVE_CELL);
     }
 
     @Test
@@ -37,11 +38,12 @@ class ConwayMapTest {
     void getCell() {
         assertEquals(ConwayMap.LIVE_CELL, c.getCell(0,0));
         assertEquals(ConwayMap.DEAD_CELL, c.getCell(9,9));
+        assertEquals(ConwayMap.LIVE_CELL, c.getCell(11, 1)); // Wrapping
     }
 
     @Test
     void neighbours() {
-        assertEquals( 1, c.neighbours(0,0));
+        assertEquals( 2, c.neighbours(0,0));
         assertEquals(1, c.neighbours(9, 9));
         assertEquals( 0, c.neighbours(5, 5));
     }
@@ -49,18 +51,16 @@ class ConwayMapTest {
     @Test
     void testToString() {
         assertEquals("""
-                ConwayGameOfLife with row 10, col 10, current tick 0.
-                Map:\s
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                """, c.toString());
+                10, 10
+                1, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 1, 0, 0, 0, 0, 0, 0, 0, 0""", c.toString());
     }
 }

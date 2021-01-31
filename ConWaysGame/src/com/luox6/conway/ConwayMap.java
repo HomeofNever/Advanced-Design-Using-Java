@@ -117,7 +117,7 @@ public class ConwayMap {
         // However, if it is less than 0, we need to have the reminder of our length and then
         // add the length back. Not the index.
         final BiFunction<Integer, Integer, Integer> wrapper =
-                (k, v) -> k < 0 ? k % v + v : k % (v - 1);
+                (k, v) -> k < 0 ? k % v + v : k % v;
         int realRow = wrapper.apply(row, this.row);
         int realCol = wrapper.apply(col, this.col);
 
@@ -177,7 +177,11 @@ public class ConwayMap {
      * Move game forward by calculating each coordinates
      */
     public void tick() {
-        int[][] changed = map.clone();
+        // Clone the array for record
+        int[][] changed = new int[row][col];
+        for (int i = 0; i < row; i++) {
+            changed[i] = map[i].clone();
+        }
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -208,12 +212,16 @@ public class ConwayMap {
     @Override
     public String toString() {
         StringBuilder x = new StringBuilder();
-        x.append("ConwayGameOfLife with row " + row + ", col " + col + ", current tick " + tick + ".\n");
-        x.append("Map: \n");
+        x.append(row).append(", ").append(col).append("\n");
         for (int i = 0; i < row; i++) {
-            x.append(Arrays.toString(map[i]));
-            x.append("\n");
+            for (int j = 0; j < col - 1; j++) {
+                x.append(map[i][j]).append(", ");
+            }
+            x.append(map[i][col - 1]).append("\n");
         }
+
+        // Remove last newline
+        x.setLength(x.length() - 1);
 
         return x.toString();
     }
