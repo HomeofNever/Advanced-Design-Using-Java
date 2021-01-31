@@ -94,7 +94,20 @@ Open the powershell and nevigate to the project root directory
 .\scripts\run.cmd <input> <output> <step>
 ```
 
-
 ## Others
 
-Please consult `manuals/` for more info
+### `manuals/`
+
+Program usages, and test explanations
+
+### `tests/`
+
+Where examples/tests files stored. Read `manual.pdf` and `tests.pdf` for more info
+
+### `deps/`
+
+Dependencies(jars) such as JUnit for consistent environment
+
+### `compile-pdf.sh`
+
+Compile `.md` file into `pdf`. `pandoc` used

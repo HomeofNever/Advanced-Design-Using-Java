@@ -3,8 +3,10 @@ package com.luox6.conway;
 import java.io.*;
 
 /**
- * Console interface handling and file parsing
- */
+* Conway Game of Life Simulator
+* @author Xinhao Luo
+* @version 0.0.1
+*/
 public class Main {
 
     /**

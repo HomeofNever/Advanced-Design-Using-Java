@@ -5,6 +5,8 @@ import java.util.function.BiFunction;
 
 /**
  * Main class stores the conway map and process ticks
+ * @author Xinhao Luo
+ * @version 0.0.1 
  */
 public class ConwayMap {
     private int[][] map;
