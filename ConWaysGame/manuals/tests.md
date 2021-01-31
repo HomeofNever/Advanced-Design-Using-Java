@@ -2,11 +2,11 @@
 
 The following methods are used when testing the program. 
 
-## United test
+## Unit Test
 
-A Java framework, JUnit5, has been used within the process. You may consult to `com.luox6.conway.test` for the test cases written.
+A Java framework, JUnit5, has been used within the process. You may consult to `com.luox6.conway.test` for the written test cases.
 
-### Included sections
+### Included Sections
 
 - getters/setters
 - class constructor
@@ -22,13 +22,9 @@ You may use your favourite IDE integration with JUnit. Please consult [JUnit man
 However, if you would like to use `ConsoleLauncher`, after compiling the program following the instruction in `readme.md`, try the following command for unit test result.
 
 ```bash
-# The following bash command should run at project root directory
+$ # The following bash command should run at project root directory
 $ java -jar deps/junit-platform-console-standalone-1.7.0.jar -cp ./src --scan-class-path
-```
 
-Success Output: 
-
-```
 Thanks for using JUnit! Support its development at https://junit.org/sponsoring
 
 ╷
