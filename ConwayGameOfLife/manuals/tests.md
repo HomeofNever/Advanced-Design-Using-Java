@@ -77,4 +77,6 @@ Commands to run these examples have also listed in the manual. It is believed th
 
 Game rules are also tested at `example2.txt` and `example3.txt` by stepping through the generated files.
 
-Some examples inspired by [wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+You may find the expected output in `tests/result` section. Use `diff` for the file generated from the program with corresponded command -- these should be identical or it means something goes wrong.
+
+Some examples inspired by [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).

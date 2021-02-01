@@ -3,6 +3,65 @@
 This is the user manual of Conway Game of Life simulator.  
 You may find detail program usage and error message explanation here.
 
+## Examples Args  
+
+Please replace `...` with commands corresponed to your OS specify in `readme.md`.
+
+```bash
+... tests/example1.txt tests/result/example1 21
+... tests/example2.txt tests/result/example2 5
+... tests/example3.txt tests/result/example3 50
+```
+
+### Linux Example
+
+Here is how linux system should run the args, an example.
+
+```bash
+sh scripts/run.sh
+sh scripts/run.sh tests/example1.txt tests/result/example1 21
+sh scripts/run.sh tests/example2.txt tests/result/example2 5
+sh scripts/run.sh tests/example3.txt tests/result/example3 50
+sh scripts/run.sh tests/invalid1.txt tests/result/example1 1
+sh scripts/run.sh tests/invalid2.txt tests/result/example1 1
+sh scripts/run.sh tests/invalid3.txt tests/result/example1 1
+sh scripts/run.sh tests/invalid4.txt tests/result/example1 1
+sh scripts/run.sh tests/invalid5.txt tests/result/example1 1
+sh scripts/run.sh tests/invalid5.txt tests/result/example1 -1
+```
+
+### Bad Examples  
+
+```bash
+... tests/invalid1.txt tests/result/example1 1
+Err: [seedFile] Invalid row/col, must be positive integer larger than 2
+... tests/invalid2.txt tests/result/example1 1
+Err: [seedFile] Invalid row/col, must be positive integer larger than 2
+... tests/invalid3.txt tests/result/example1 1
+Err: [seedFile] Unexpected cell type 2
+... tests/invalid4.txt tests/result/example1 1
+Err: [seedFile] Unexpected col length at row index 1
+... tests/invalid5.txt tests/result/example1 1
+Cannot invoke "String.split(String)" because "<local1>" is null
+... tests/example3.txt tests/result/example1 -1
+Err: [input] step -1 is invalid
+```
+
+## Screenshot
+
+Here is an example screenshot of how it looks like when program runs, we will talk about each arguments in the following sections. 
+
+![](./screenshot.png)
+
+### Basic Usage
+
+If incorrect/missing arguments given, the following message will occur.
+
+```bash
+$ sh scripts/run/sh                                            
+Args: <input> <output> <step>
+```
+
 ## Inputs  
 
 In this section, program usage will be presented, as well as input file format.
@@ -98,30 +157,3 @@ When reading a specific cell in the seed file, program cannot recognize its stat
 ### `Cannot invoke "String.split(String)" because "<local1>" is null`  
 
 Seed file is possibly empty. Please check if correct seed file is given.
-
-## Examples Args  
-
-Please append the following with commands corresponed to your OS specify in `readme.md`
-
-```bash
-tests/example1.txt tests/result/example1 21
-tests/example2.txt tests/result/example2 5
-tests/example3.txt tests/result/example3 50
-```
-
-### Bad Examples  
-
-```bash
-... tests/invalid1.txt tests/result/example1 1
-Err: [seedFile] Invalid row/col, must be positive integer larger than 2
-... tests/invalid2.txt tests/result/example1 1
-Err: [seedFile] Invalid row/col, must be positive integer larger than 2
-... tests/invalid3.txt tests/result/example1 1
-Err: [seedFile] Unexpected cell type 2
-... tests/invalid4.txt tests/result/example1 1
-Err: [seedFile] Unexpected col length at row index 1
-... tests/invalid5.txt tests/result/example1 1
-Cannot invoke "String.split(String)" because "<local1>" is null
-... tests/example3.txt tests/result/example1 -1
-Err: [input] step -1 is invalid
-```

@@ -100,6 +100,10 @@ Open the powershell and nevigate to the project root directory
 
 Program usages, and test explanations
 
+#### `compile-pdf.sh`
+
+Compile `.md` file into `pdf`. `pandoc` used
+
 ### `tests/`
 
 Where examples/tests files stored. Read `manual.pdf` and `tests.pdf` for more info
@@ -107,7 +111,3 @@ Where examples/tests files stored. Read `manual.pdf` and `tests.pdf` for more in
 ### `deps/`
 
 Dependencies(jars) such as JUnit for consistent environment
-
-### `compile-pdf.sh`
-
-Compile `.md` file into `pdf`. `pandoc` used
