@@ -138,9 +138,7 @@ public class ConwayMap {
             changed[row][col].setStatus(Cell.DEAD_CELL);
         } else if (numNeighbours == 3) {
             changed[row][col].setStatus(Cell.LIVE_CELL);
-        }
-
-        if (changed[row][col].isAlive()) {
+        } else if (changed[row][col].isAlive()) {
             changed[row][col].tick();
         }
 
@@ -154,7 +152,7 @@ public class ConwayMap {
         // Clone the array for record
         Cell[][] changed = new Cell[row][col];
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < row; j++) {
+            for (int j = 0; j < col; j++) {
                 changed[i][j] = map[i][j].clone();
             }
         }
@@ -185,11 +183,47 @@ public class ConwayMap {
         return x.toString();
     }
 
+    /**
+     * This function is about clear all cell tick
+     * but keep its status
+     * Useful when need to set as begin map
+     */
     public void clearTicks() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col - 1; j++) {
                 map[i][j].resetTicks();
             }
         }
+    }
+
+    /**
+     * Calculate number of cell alive on the map
+     * @return int number of alive cell
+     */
+    public int getAliveCellNum() {
+        int count = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col - 1; j++) {
+                count += map[i][j].isAlive() ? 1 : 0;
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * Calculate number of cell that is not alive on the map
+     * @return cell is not alive, possibly counts cell in unknown state
+     */
+    public int getDeadCellNum() {
+        return getTotalCellNum() - getAliveCellNum();
+    }
+
+    /**
+     * Calculate number of cell this map contains
+     * @return number of cell on the map
+     */
+    public int getTotalCellNum() {
+        return row * col;
     }
 }

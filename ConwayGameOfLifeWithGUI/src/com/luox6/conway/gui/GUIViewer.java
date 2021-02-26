@@ -15,6 +15,9 @@ public class GUIViewer extends JFrame {
     protected StepActionPanel stepActionPanel;
     protected GameBoard gameBoard;
 
+    protected ConfigurationPanel configurationPanel;
+    protected RangeSelectionPanel rangeSelectionPanel;
+
     private JPanel mainPanel;
 
     public GUIViewer(GUIController guiController) {
@@ -37,6 +40,9 @@ public class GUIViewer extends JFrame {
         setCenter();
         setPageLeft();
         setPageEnd();
+
+        configurationPanel = new ConfigurationPanel(guiController);
+        rangeSelectionPanel = new RangeSelectionPanel(guiController);
     }
 
 
@@ -63,9 +69,5 @@ public class GUIViewer extends JFrame {
     private void setCenter() {
         gameBoard = new GameBoard(guiController);
         mainPanel.add(gameBoard, BorderLayout.CENTER);
-    }
-
-    protected void setGUIController(GUIController guiController) {
-        this.guiController = guiController;
     }
 }

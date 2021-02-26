@@ -20,6 +20,13 @@ class ConwayMapTest {
     }
 
     @Test
+    void countCellNum() {
+        assertEquals(100, c.getTotalCellNum());
+        assertEquals(3, c.getAliveCellNum());
+        assertEquals(97, c.getDeadCellNum());
+    }
+
+    @Test
     void getMapRowLength() {
         assertEquals(10, c.getMapRowLength());
     }

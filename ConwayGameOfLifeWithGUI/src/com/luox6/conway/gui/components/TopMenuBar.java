@@ -3,8 +3,6 @@ package com.luox6.conway.gui.components;
 import com.luox6.conway.gui.GUIController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TopMenuBar extends JMenuBar {
     GUIController controller;
@@ -13,6 +11,7 @@ public class TopMenuBar extends JMenuBar {
 
     JMenuItem openFile;
     JMenuItem saveFile;
+    JMenuItem saveMultipleFile;
     JMenuItem exitProgram;
     JMenuItem configuration;
 
@@ -22,14 +21,15 @@ public class TopMenuBar extends JMenuBar {
         fileMenu = new JMenu("File");
         actionMenu = new JMenu("Actions");
         openFile = new JMenuItem("Open file...");
-        saveFile = new JMenuItem("Save file...");
+        saveFile = new JMenuItem("Save Current map as ...");
+        saveMultipleFile = new JMenuItem("Save range of maps as ...");
         exitProgram = new JMenuItem("Exit");
         configuration = new JMenuItem("Configuration");
 
         fileMenu.add(openFile);
-        fileMenu.add(saveFile);
         fileMenu.addSeparator();
-
+        fileMenu.add(saveFile);
+        fileMenu.add(saveMultipleFile);
         actionMenu.add(configuration);
         actionMenu.addSeparator();
         actionMenu.add(exitProgram);
@@ -41,11 +41,10 @@ public class TopMenuBar extends JMenuBar {
     }
 
     private void setActions() {
-        exitProgram.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.exitButtonPressed();
-            }
-        });
+        openFile.addActionListener(e -> controller.openFile());
+        saveFile.addActionListener(e -> controller.saveFile());
+        saveMultipleFile.addActionListener(e -> controller.showMultipleFilesPanel());
+        configuration.addActionListener(e -> controller.openConfigurationDialog());
+        exitProgram.addActionListener(e -> controller.exitButtonPressed());
     }
 }

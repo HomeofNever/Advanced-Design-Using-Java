@@ -5,8 +5,6 @@ import com.luox6.conway.gui.models.MapModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class StepActionPanel extends JPanel {
     GUIController controller;
@@ -32,26 +30,9 @@ public class StepActionPanel extends JPanel {
     }
 
     private void setActions() {
-        goForward.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.nextStepButtonPressed();
-            }
-        });
-
-        goBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.backStepButtonPressed();
-            }
-        });
-
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.stepValueSet(textField.getText());
-            }
-        });
+        goForward.addActionListener(e -> controller.nextStepButtonPressed());
+        goBack.addActionListener(e -> controller.backStepButtonPressed());
+        textField.addActionListener(e -> controller.stepValueSet(textField.getText()));
     }
 
     public void updateStep(Integer i) {

@@ -1,4 +1,4 @@
-package com.luox6.conway.gui;
+package com.luox6.conway.gui.models;
 
 import java.awt.*;
 import java.util.prefs.Preferences;
@@ -10,6 +10,9 @@ public class UserSetting {
     private static final String TEXT_COLOR = "TEXT_COLOR";
 
     private static final String SHOW_SURVIVAL = "SHOW_SURVIVAL";
+    private static final String MAX_LEVEL_SHADE = "MAX_LEVEL_SHADE";
+
+    private static final String OUTPUT_FILE_FORMAT = "OUTPUT_FILE_FORMAT";
 
     private static final Preferences prefs = Preferences.userRoot().node(USER_PREF_NODE);
 
@@ -51,5 +54,21 @@ public class UserSetting {
 
     public static void setTextColor(Color textColor) {
         prefs.put(TEXT_COLOR, Color2String(textColor));
+    }
+
+    public static String getOutputFilesFormat() {
+        return prefs.get(OUTPUT_FILE_FORMAT, "result.%1d.txt");
+    }
+
+    public static void setOutputFilesFormat(String s) {
+        prefs.put(OUTPUT_FILE_FORMAT, s);
+    }
+
+    public static int getMaxLevelShade() {
+        return prefs.getInt(MAX_LEVEL_SHADE, 5);
+    }
+
+    public static void setMaxLevelShade(int level) {
+        prefs.putInt(MAX_LEVEL_SHADE, level);
     }
 }

@@ -3,8 +3,6 @@ package com.luox6.conway.gui.components;
 import com.luox6.conway.gui.GUIController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VisualActionPanel extends JPanel {
     GUIController controller;
@@ -27,18 +25,7 @@ public class VisualActionPanel extends JPanel {
     }
 
     public void setActions() {
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.resetButtonPressed();
-            }
-        });
-
-        setBeginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.setBeginButtonPressed();
-            }
-        });
+        resetButton.addActionListener(e -> controller.resetButtonPressed());
+        setBeginButton.addActionListener(e -> controller.setBeginButtonPressed());
     }
 }

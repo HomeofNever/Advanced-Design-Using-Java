@@ -14,6 +14,7 @@ public class JCell extends JButton {
         super();
         setOpaque(true);
         setBorderPainted(false);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.i = i;
         this.j = j;
     }

@@ -8,6 +8,7 @@ public class Main {
         GUIViewer GUIViewer = new GUIViewer(guiController);
         guiController.setGuiViewer(GUIViewer);
 
+        // Launch GUI
         guiController.start();
     }
 }

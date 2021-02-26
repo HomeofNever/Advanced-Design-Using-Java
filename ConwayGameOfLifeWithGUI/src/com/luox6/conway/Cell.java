@@ -104,8 +104,11 @@ public class Cell implements Cloneable {
     }
 
     public void flip() {
-        this.status = this.status == LIVE_CELL ? DEAD_CELL : LIVE_CELL;
-        this.times = 0;
+        if (this.status == LIVE_CELL) {
+            setStatus(DEAD_CELL);
+        } else {
+            setStatus(LIVE_CELL);
+        }
     }
 
     @Override

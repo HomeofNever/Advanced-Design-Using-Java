@@ -43,9 +43,4 @@ public class MapModel extends com.luox6.conway.MapCollection {
     public boolean isStarted() {
         return getLatestIndex() > 0;
     }
-
-    public void reset() {
-        super.reset();
-        currentIndex = 0;
-    }
 }
