@@ -5,5 +5,5 @@ with (import (import ./nix/sources.nix).nixpkgs) { config.allowUnfree = true; };
 stdenv.mkDerivation {
   name = "idea";
   # nativeBuildInputs = [ cmake gcc  ];
-  buildInputs = [ jdk jetbrains.idea-ultimate ];
+  buildInputs = [ jdk jetbrains.idea-ultimate niv ];
 }
