@@ -5,8 +5,12 @@ with (import (import ./nix/sources.nix).nixpkgs) { config.allowUnfree = true; };
 stdenv.mkDerivation {
   name = "idea";
   # nativeBuildInputs = [ cmake gcc  ];
-  buildInputs = [ jdk jetbrains.idea-ultimate ];
+  buildInputs = [ 
+    jdk 
+    jetbrains.idea-ultimate 
+    pandoc texlive.combined.scheme-full
+  ];
 }
 
-# For pandoc, please add [ pandoc texlive.combined.scheme-full ]
+# For pandoc, please uncomment line 11
 # It is a huge package (latex), so it won't be added by deault

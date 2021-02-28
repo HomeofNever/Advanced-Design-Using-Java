@@ -2,7 +2,15 @@ package com.luox6.conway.gui.factories;
 
 import javax.swing.*;
 
+/**
+ * GUI Button Factory
+ */
 public class Button {
+    /**
+     * Transparent button for color display
+     * @param title Text on button
+     * @return JButton ready for setBackground GUI
+     */
     public static JButton transparentButton(String title) {
         JButton b = new JButton(title);
         b.setOpaque(true);

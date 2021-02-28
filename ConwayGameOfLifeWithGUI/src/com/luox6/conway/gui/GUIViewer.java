@@ -6,18 +6,49 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIViewer extends JFrame {
+    /**
+     * Reference of the controller, for notification purpose
+     */
     protected GUIController guiController;
 
+    /**
+     * Top Menu Bar section
+     */
     protected TopMenuBar topMenuBar;
 
+    /**
+     * Lower bar of the status
+     */
     protected StatusPanel statusPanel;
+
+    /**
+     * Panel buttons on the left side of the application
+     */
     protected VisualActionPanel visualActionPanel;
+
+    /**
+     * Top panel steppers
+     */
     protected StepActionPanel stepActionPanel;
+
+    /**
+     * Main game board
+     */
     protected GameBoard gameBoard;
 
+    /**
+     * User Configuration panel
+     */
     protected ConfigurationPanel configurationPanel;
+
+    /**
+     * Save result with range panel
+     */
     protected RangeSelectionPanel rangeSelectionPanel;
 
+    /**
+     * Main layout panel
+     */
     private JPanel mainPanel;
 
     public GUIViewer(GUIController guiController) {
@@ -30,11 +61,14 @@ public class GUIViewer extends JFrame {
         init();
     }
 
+    /**
+     * Initialization subcomponents and set it to the corresponded location of the layout
+     */
     private void init() {
         mainPanel = new JPanel(new BorderLayout());
         add(mainPanel);
 
-        // Init Components
+        // Set their locations
         setFrame();
         setPageStart();
         setCenter();
@@ -46,6 +80,8 @@ public class GUIViewer extends JFrame {
     }
 
 
+    /* The method below are layout settings */
+
     private void setPageStart() {
         stepActionPanel = new StepActionPanel(guiController);
         mainPanel.add(stepActionPanel, BorderLayout.PAGE_START);
@@ -56,7 +92,7 @@ public class GUIViewer extends JFrame {
         mainPanel.add(visualActionPanel, BorderLayout.LINE_START);
     }
 
-    private void setPageEnd () {
+    private void setPageEnd() {
         statusPanel = new StatusPanel();
         mainPanel.add(statusPanel, BorderLayout.PAGE_END);
     }

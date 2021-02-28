@@ -1,13 +1,19 @@
 package com.luox6.conway.gui.components;
 
-import com.luox6.conway.Cell;
-
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
 
+/**
+ * Custom Cell class with row/col information embed
+ */
 public class JCell extends JButton {
+    /**
+     * Cell row
+     */
     int i;
+    /**
+     * Cell Col
+     */
     int j;
 
     public JCell(int i, int j) {
@@ -19,10 +25,18 @@ public class JCell extends JButton {
         this.j = j;
     }
 
+    /**
+     * Get Cell Row
+     * @return Cell row
+     */
     public int getI() {
         return i;
     }
 
+    /**
+     * Get Cell Col
+     * @return Cell col
+     */
     public int getJ() {
         return j;
     }

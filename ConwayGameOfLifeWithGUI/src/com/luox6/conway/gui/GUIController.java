@@ -12,7 +12,9 @@ import javax.swing.*;
 import java.io.*;
 
 public class GUIController {
+    // Models
     protected MapModel mapModel;
+    // Viewers
     protected GUIViewer guiViewer;
 
     public GUIController() {
@@ -20,10 +22,18 @@ public class GUIController {
         mapModel = new MapModel(20, 20);
     }
 
+    /**
+     * Set reference of the Viewer object, for update purposes
+     *
+     * @param guiViewer
+     */
     public void setGuiViewer(GUIViewer guiViewer) {
         this.guiViewer = guiViewer;
     }
 
+    /**
+     * Application entry
+     */
     protected void start() {
         updateMapView();
 
@@ -32,6 +42,12 @@ public class GUIController {
         guiViewer.setVisible(true);
     }
 
+    /**
+     * Cell button handler
+     *
+     * @param row cell row
+     * @param col cell col
+     */
     public void cellButtonPressed(int row, int col) {
         if (!mapModel.isStarted()) {
             Cell c = mapModel.getLatestMap().getCell(row, col);
@@ -44,6 +60,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Step next button handler
+     */
     public void nextStepButtonPressed() {
         try {
             mapModel.runOnce();
@@ -54,6 +73,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Step back button handler
+     */
     public void backStepButtonPressed() {
         try {
             mapModel.goBack();
@@ -63,6 +85,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Step value text field handler
+     *
+     * @param s input String, expected a valid int representation
+     */
     public void stepValueSet(String s) {
         try {
             int step = Integer.parseInt(s);
@@ -77,20 +104,32 @@ public class GUIController {
         }
     }
 
+    /**
+     * Exit button handler
+     */
     public void exitButtonPressed() {
         System.exit(0);
     }
 
+    /**
+     * Reset button handler
+     */
     public void resetButtonPressed() {
         setNewMap(new ConwayMap(mapModel.getRow(), mapModel.getCol()));
     }
 
+    /**
+     * Set begin button handler
+     */
     public void setBeginButtonPressed() {
         ConwayMap m = mapModel.getCurrentConwayMap();
         m.clearTicks();
         setNewMap(m);
     }
 
+    /**
+     * File -> Open File MenuItem handler
+     */
     public void openFile() {
         try {
             JFileChooser fc = FileChooser.conwayMapDialog("Open Map File");
@@ -104,6 +143,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * File -> Save file MenuItem handler
+     */
     public void saveFile() {
         try {
             JFileChooser fc = FileChooser.conwayMapDialog("Save Map as");
@@ -113,15 +155,19 @@ public class GUIController {
                 outputFile.append(mapModel.getCurrentConwayMap().toString());
                 outputFile.close();
             }
-            JOptionPane.showMessageDialog(guiViewer,
-                    "File saved successfully!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+            Dialog.genericSuccessDialog(guiViewer, "File saved successfully!");
         } catch (Exception e) {
             Dialog.genericWarningDialog(guiViewer, e);
         }
     }
 
+    /**
+     * Range Panel -> Save button handler
+     *
+     * @param startIndex save range start index
+     * @param endIndex   save range end index
+     * @param fileFormat file name format, "%1d" should be part of the file format so that file result won't be override
+     */
     public void saveMultipleFiles(String startIndex, String endIndex, String fileFormat) {
         try {
             int si = Integer.parseInt(startIndex);
@@ -145,10 +191,7 @@ public class GUIController {
                     outputFile.close();
                 }
                 UserSetting.setOutputFilesFormat(fileFormat);
-                JOptionPane.showMessageDialog(guiViewer,
-                        "Files saved successfully!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
+                Dialog.genericSuccessDialog(guiViewer, "Files saved successfully!");
             }
         } catch (NumberFormatException e) {
             Dialog.numberParseDialog(guiViewer, e);
@@ -157,39 +200,54 @@ public class GUIController {
         }
     }
 
+    /**
+     * Action -> Configuration button handler
+     */
     public void openConfigurationDialog() {
         guiViewer.configurationPanel.setVisible(true);
     }
 
+    /**
+     * Action -> Configuration -> Live Cell button handler
+     */
     public void setLiveCellColor() {
         UserSetting.setAliveColor(JColorChooser.showDialog(guiViewer, "Set Live Cell Color", UserSetting.getAliveColor()));
         guiViewer.configurationPanel.updateSettings();
         updateMapView();
     }
 
+    /**
+     * Action -> Configuration -> Dead Cell button handler
+     */
     public void setDeadCellColor() {
         UserSetting.setDeadColor(JColorChooser.showDialog(guiViewer, "Set Dead Cell Color", UserSetting.getDeadColor()));
         guiViewer.configurationPanel.updateSettings();
         updateMapView();
     }
 
+    /**
+     * Action -> Configuration -> Text button handler
+     */
     public void setTextColor() {
         UserSetting.setTextColor(JColorChooser.showDialog(guiViewer, "Set Text Color", UserSetting.getTextColor()));
         guiViewer.configurationPanel.updateSettings();
         updateMapView();
     }
 
+    /**
+     * Action -> Configuration -> Survival checkbox handler
+     */
     public void setSurvivalStatus(boolean status) {
         UserSetting.setShowSurvivalTimes(status);
         guiViewer.configurationPanel.updateSettings();
         updateMapView();
     }
 
-    public void showMultipleFilesPanel() {
-        guiViewer.rangeSelectionPanel.updateEndIndex(mapModel.getLatestIndex());
-        guiViewer.rangeSelectionPanel.setVisible(true);
-    }
-
+    /**
+     * Action -> Configuration -> Shade Level textbox handler
+     *
+     * @param text user input shade level, expected an integer representation
+     */
     public void setMaxShadeLevel(String text) {
         try {
             int i = Integer.parseInt(text);
@@ -206,6 +264,17 @@ public class GUIController {
         }
     }
 
+
+    /**
+     * File -> Save range of maps button handler
+     */
+    public void showMultipleFilesPanel() {
+        guiViewer.rangeSelectionPanel.updateEndIndex(mapModel.getLatestIndex());
+        guiViewer.rangeSelectionPanel.setVisible(true);
+    }
+
+
+    /* Methods below are for internal batch update */
 
     private void setNewMap(ConwayMap c) {
         mapModel = new MapModel(c);

@@ -8,6 +8,11 @@ import java.io.File;
  * Factory for all sorts of FileChoosing behavior
  */
 public class FileChooser {
+    /**
+     * FileChooser for single map save
+     * @param title window title
+     * @return FileChooser set with file only selection mode and override notice
+     */
     public static JFileChooser conwayMapDialog(String title) {
         JFileChooser fc = new confirmFileChooser();
         FileNameExtensionFilter fne = new FileNameExtensionFilter("Text File", "txt");
@@ -19,6 +24,11 @@ public class FileChooser {
         return fc;
     }
 
+    /**
+     * FileChooser for range save directory selection
+     * @param title Window title
+     * @return FileChooser set with directory selection mode and override notice
+     */
     public static JFileChooser conwayMapMultipleFileDialog(String title) {
         JFileChooser fc = new confirmFileChooser();
         fc.setDialogTitle(title);

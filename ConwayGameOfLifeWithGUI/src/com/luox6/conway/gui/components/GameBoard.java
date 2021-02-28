@@ -8,11 +8,27 @@ import com.luox6.conway.gui.models.UserSetting;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main Convey GOL game map visual panel
+ */
 public class GameBoard extends JPanel {
-    GUIController controller;
-    int row = 0;
-    int col = 0;
+    /**
+     * Controller Reference
+     */
+    private GUIController controller;
 
+    /**
+     * Map row
+     */
+    private int row = 0;
+    /**
+     * Map col
+     */
+    private int col = 0;
+
+    /**
+     * Cell representations
+     */
     private JCell cells[][];
 
     public GameBoard(GUIController controller) {
@@ -20,6 +36,10 @@ public class GameBoard extends JPanel {
         this.controller = controller;
     }
 
+    /**
+     * Initialization Cells on the map
+     * @param c ConwayMap to init
+     */
     protected void init(ConwayMap c) {
         removeAll();
         row = c.getMapRowLength();
@@ -36,6 +56,11 @@ public class GameBoard extends JPanel {
         }
     }
 
+    /**
+     * Update cell state with given map and ticks
+     * @param c ConwayMap providing states
+     * @param ticks Current Round for cell shades
+     */
     protected void setState(ConwayMap c, int ticks) {
         for (int i = 0; i < getRow(); i++) {
             for (int j = 0; j < getCol(); j++) {
@@ -44,6 +69,13 @@ public class GameBoard extends JPanel {
         }
     }
 
+    /**
+     * Set single cell status with given coordinates, cell object, and round/tick
+     * @param i map row
+     * @param j map col
+     * @param c Cell at given location
+     * @param ticks Current map index
+     */
     public void setState(int i, int j, Cell c, int ticks) {
         JCell b = cells[i][j];
         if (c.isAlive()) {
@@ -63,6 +95,7 @@ public class GameBoard extends JPanel {
         }
         b.setForeground(UserSetting.getTextColor());
 
+        // Show or hide number
         if (UserSetting.getSurvivalStatus()) {
             String times = String.valueOf(c.getTimes());
             b.setText(times);
@@ -73,6 +106,11 @@ public class GameBoard extends JPanel {
         }
     }
 
+    /**
+     * Update view to given map, re-initialize map
+     * @param c map top
+     * @param ticks
+     */
     public void setConwayMap(ConwayMap c, int ticks) {
         if (c.getMapRowLength() != row || c.getMapColLength() != col) {
             init(c);

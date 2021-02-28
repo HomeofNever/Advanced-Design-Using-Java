@@ -58,11 +58,11 @@ By default, installation from Java won't add javadoc to path. Please add Java bi
 ![](./windows_path.png)
 
 
-### 
-
 ## Usage
 
 The following command are happened under project root directory
+
+for test suit usage, please refer to `manual/tests.pdf`
 
 ### Linux
 
@@ -76,6 +76,12 @@ sh scripts/compile.sh
 
 ```bash
 sh scripts/run.sh <input> <output> <step>
+```
+
+##### Run GUI
+
+```bash
+sh scripts/runGUI.sh
 ```
 
 ### Windows
@@ -92,6 +98,12 @@ Open the powershell and nevigate to the project root directory
 
 ```cmd
 .\scripts\run.cmd <input> <output> <step>
+```
+
+##### Run GUI
+
+```cmd
+.\scripts\runGUI.cmd
 ```
 
 ## Others

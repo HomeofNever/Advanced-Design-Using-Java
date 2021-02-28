@@ -8,50 +8,60 @@ A Java framework, JUnit5, has been used within the process. You may consult to `
 
 ### Included Sections
 
+#### Cell
+
+Cell represents a single cell in the map
+
+- clone a new cell with exact same state
+- set status of the cell
+- record survival times
+
+#### ConwayMap
+
+ConwayMap is the a map represents the status of cells
+
 - row/col length getters
 - class constructor
 - `getCell` cell status with coordinate wrapping
 - `neighbour` live cell counts around specific coordinates
 - `toString` string representation/output format
+- count cell statuses
+
+#### MapCollection
+
+MapCollection is a collection of ConwayMap, represent a progress from a single map
+
+- map index increments
+- collection reset
+- identify calculated indexes
+
+#### MapModel
+
+MapModel include extra functionality over Collection, where view required. E.g. current viewing map index
+
+- step actions (go back and forth)
+- identify if simulation has started
+- set (can calculate, if necessary) index to given location
+- input error handling
 
 The above have tested class's construction, mutations, and expected string representation.
 
 ### Run Unit Test 
 
 You may use your favourite IDE integration with JUnit. Please consult [JUnit manual](https://junit.org/junit5/docs/current/user-guide/#running-tests)
-However, if you would like to use `ConsoleLauncher`, after compiling the program following the instruction in `readme.md`, try the following command for unit test result.
+However, if you would like to use `ConsoleLauncher`, after compiling the program following the instruction in `readme.md`, try the following command under project root directory for unit test result.
 
 ```bash
-$ # The following bash command should run at project root directory
-$ java -jar deps/junit-platform-console-standalone-1.7.0.jar -cp ./src --scan-class-path
-
-Thanks for using JUnit! Support its development at https://junit.org/sponsoring
-
-╷
-├─ JUnit Jupiter ✔
-│  └─ ConwayMapTest ✔
-│     ├─ getMapRowLength() ✔
-│     ├─ isValidCoordinate() ✔
-│     ├─ getMapColLength() ✔
-│     ├─ testToString() ✔
-│     ├─ getCell() ✔
-│     └─ neighbours() ✔
-└─ JUnit Vintage ✔
-
-Test run finished after 89 ms
-[         3 containers found      ]
-[         0 containers skipped    ]
-[         3 containers started    ]
-[         0 containers aborted    ]
-[         3 containers successful ]
-[         0 containers failed     ]
-[         6 tests found           ]
-[         0 tests skipped         ]
-[         6 tests started         ]
-[         0 tests aborted         ]
-[         6 tests successful      ]
-[         0 tests failed          ]
+$ sh scripts/test.sh
 ```
+
+or windows platform 
+
+```cmd
+.\scripts\test.cmd
+```
+
+Please consult `test-log.txt` for complete log.
 
 ## Manual Test
 
@@ -59,7 +69,10 @@ However, the unit test cannot cover some corner cases, e.g.:
 
 - Seed file parsing
 - IO/Input validation
+- GUI functionality
 - ...
+
+### CLI & Data Representation
 
 In order to test these cases, here we have some crafted files, which are also listed in `manual->Example Args` section.
 These cases have covered the following topics: 
@@ -80,3 +93,48 @@ Game rules are also tested at `example2.txt` and `example3.txt` by stepping thro
 You may find the expected output in `tests/result` section. Use `diff` for the file generated from the program with corresponded command -- these should be identical or it means something goes wrong.
 
 Some examples inspired by [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+
+### GUI & Action test
+
+As the underlying data representation has both tested by unit test and the manual test section, for the GUI part, it is mostly focus whether the data bindings are working, or if target behaviors are reached.
+
+#### Before simulation
+
+You may find the status bar on the left bottom shown as "Ready to start"
+
+- cell color button color and text changed when pressed
+- calculated simulation status on the right bottom should be 0
+- top stepper number should be 0
+
+#### Simulation in progress
+
+- warning when cell is pressed
+- calculated simulation status on the right bottom should be a positive number
+- top stepper number will changed as step forward and step back
+- the number of live/dead cell on the bottom middle should update with the map
+
+**Notice: it is normal that the calculated simulation is 1 less then the cell survival time. The App calculated the survival at stage 0 with times 1**
+
+#### Toolbar
+
+- `Set as Begin` should clear all cells' survival time (0 for dead, 1 for live)
+- `Reset` should set everything of the map to 0 but keep the row and col as the same
+- `Configuration` should invoke configuration panel
+
+#### Save file
+
+- file with give name will appear and can be open via menu -> open file
+- range saving button result and override notice
+- filename format
+
+#### Configuration
+
+- setting persistence
+- setting update should immediately reflect to the board
+- cell color changes
+- hide/show cell survival time
+- cell shade changes
+
+#### Warnings
+
+- At any time, the textfield expected number but failed to parse will give warning

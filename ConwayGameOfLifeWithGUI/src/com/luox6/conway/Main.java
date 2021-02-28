@@ -15,6 +15,12 @@ public class Main {
      * @param args User specify args, should include input, output locations and expected steps.
      */
     public static void main(String[] args) {
+        if (args.length == 1 && args[0].equals("startGUI")) {
+            System.out.println("Starting GUI...");
+            com.luox6.conway.gui.Main.init();
+            return;
+        }
+
         if (args.length != 3) {
             System.err.println("Args: <input> <output> <step>");
             System.exit(1);

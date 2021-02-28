@@ -6,16 +6,25 @@ import com.luox6.conway.gui.models.UserSetting;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Save result with range sub panel
+ */
 public class RangeSelectionPanel extends JFrame {
+
+    /**
+     * Controller Reference
+     */
+    private GUIController controller;
+
+    /* Template String */
     private static final String END_RANGE_FORMAT = "End Index (%d): ";
 
-    JTextField startIndex;
-    JTextField endIndex;
-    JTextField outputFileFormat;
-    JLabel endRangeNumber;
-    JButton saveButton;
-
-    GUIController controller;
+    /* Components */
+    private JTextField startIndex;
+    private JTextField endIndex;
+    private JTextField outputFileFormat;
+    private JLabel endRangeNumber;
+    private JButton saveButton;
 
     public RangeSelectionPanel(GUIController controller) {
         this.controller = controller;
@@ -47,15 +56,25 @@ public class RangeSelectionPanel extends JFrame {
         setActions();
     }
 
+    /**
+     * Update end index with current map latest index
+     * @param i mapModel latest map index
+     */
     public void updateEndIndex(int i) {
         endRangeNumber.setText(END_RANGE_FORMAT.formatted(i));
         endIndex.setText(String.valueOf(i));
     }
 
+    /**
+     * Update user Setting with latest format
+     */
     public void updateSettings() {
         outputFileFormat.setText(UserSetting.getOutputFilesFormat());
     }
 
+    /**
+     * Bind action to Controller
+     */
     private void setActions() {
         saveButton.addActionListener(e -> controller.saveMultipleFiles(
                 startIndex.getText(), endIndex.getText(), outputFileFormat.getText()

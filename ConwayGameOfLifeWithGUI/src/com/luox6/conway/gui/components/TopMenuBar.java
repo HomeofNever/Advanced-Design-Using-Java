@@ -5,15 +5,19 @@ import com.luox6.conway.gui.GUIController;
 import javax.swing.*;
 
 public class TopMenuBar extends JMenuBar {
-    GUIController controller;
-    JMenu fileMenu;
-    JMenu actionMenu;
+    /**
+     * Controller Reference
+     */
+    private GUIController controller;
+    private JMenu fileMenu;
+    private JMenu actionMenu;
 
-    JMenuItem openFile;
-    JMenuItem saveFile;
-    JMenuItem saveMultipleFile;
-    JMenuItem exitProgram;
-    JMenuItem configuration;
+    /* Menu Items */
+    private JMenuItem openFile;
+    private JMenuItem saveFile;
+    private JMenuItem saveMultipleFile;
+    private JMenuItem exitProgram;
+    private JMenuItem configuration;
 
     public TopMenuBar(GUIController controller) {
         super();
@@ -40,6 +44,9 @@ public class TopMenuBar extends JMenuBar {
         setActions();
     }
 
+    /**
+     * Bind GUI action to controller
+     */
     private void setActions() {
         openFile.addActionListener(e -> controller.openFile());
         saveFile.addActionListener(e -> controller.saveFile());

@@ -30,6 +30,13 @@ public class ConwayMap {
         }
     }
 
+    /**
+     * Generate map using existing information, useful when cloning map 
+     * @param cells cells of the map
+     * @param row map row
+     * @param col map col
+     * @param tick round where the map has been through
+     */
     public ConwayMap(Cell[][] cells, int row, int col, int tick) {
         map = cells;
         this.row = row;
@@ -147,6 +154,7 @@ public class ConwayMap {
 
     /**
      * Move game forward by calculating each coordinates
+     * @return a calculated map with tick + 1
      */
     public ConwayMap tick() {
         // Clone the array for record
