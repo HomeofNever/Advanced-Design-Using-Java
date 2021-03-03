@@ -168,7 +168,7 @@ To start GUI, follow the command in `README.md` and when you see console appears
 
 ## Basic Usage
 
-The appearance of the Application may varies on differnt platform. For example, on Linux, it may looks like this: 
+The appearance of the Application may varies on different platforms. For example, on Linux, it may look like this: 
 
 ![](./gui/manual/1.png)
 
@@ -189,7 +189,7 @@ There are two ways to change map status:
 - Load file using File menu on the top
 - Manually click the map
 
-Each of the block is clickable and you may toggle the cell status (live or dead). However, this action can only be done before the simutaion has started. You will see a warning if you tried to changed the stage when simulation is in progress. 
+Each of the block is clickable, and you may toggle the cell status (live or dead). However, this action can only be done before the simutaion has started. You will see a warning if you tried to change the stage when simulation is in progress. 
 
 **Notice: You may find cell survival time > current tick index, that's because App counts initial LIVE cell with 1 tick survival time**
 
@@ -197,7 +197,7 @@ Each of the block is clickable and you may toggle the cell status (live or dead)
 
 #### Set as Begin
 
-However, if you still want to edit the map, you may use the button `Set as Begin` on the toolbar located on the left side of the map. This function will set current map as a new round of simulation so that you can edit the map and run the simulation from that point. 
+However, if you still want to edit the map, you may use the button `Set as Begin` on the toolbar located on the left side of the map. This function will set the current map as a new round of simulation so that you can edit the map and run the simulation from that point. 
 
 **Notice: this action will clear all survival times, previous maps, etc. and only keeps the cell statuses.**
 
@@ -205,6 +205,10 @@ However, if you still want to edit the map, you may use the button `Set as Begin
 #### Reset
 
 If you want to reset the map but keeps the map row/col, click the button and a blank map will be set
+
+#### New Map
+
+If you want to manually set the map, click the button and enter the row and col you want accordingly. It will create an empty map with given size for you. Please note that all existing cell/map data will be destroyed.
 
 ### Load&Save
 
@@ -231,9 +235,9 @@ When you click `Save Current map as...`, a dialog will ask for name and location
 
 ##### Filename format
 
-Since there may be multiple files generated at this point. To avoid file overwrite, string `%1d` in the filename format will be replaced with map index. 
+Since there may be multiple files generated at this point, to avoid overwriting result, string `%1d` in the filename format will be replaced with map index. 
 
-Click save button and choose a directory. Please be sure the directory **does not** contain other file with name that has the same output pattern, or it may be overwrite. 
+Click save button and choose a directory. Please be sure the directory **does not** contain other files with names that has the same output pattern, or it might be overwritten. 
 
 You may change the range save multiple different range. Once you have done, simply close the window by clicking the X on the top right.
 
@@ -247,24 +251,47 @@ You may change the UI of the application by editing configuration. To open confi
 
 #### Colors
 
-You may change the color of based on cell status and the text color over it. Simply click the color blocks on the right column and a color chooser will appear. 
+You may change the color of based on cell status, and the text color over it. Simply click the color blocks on the right column, and a color chooser will appear. 
 
-Once you have decided a color, click ok and you may find the map appear changed at the same time.
+Once you have decided a color, click ok, and you may find the map appear changed at the same time.
 
 #### Survival Time
 
-Click the checkbox to toggle number on the cell. You may found there is an update delay when there are many cells. 
+Click the checkbox to toggle number on the cell. You may find there is an update delay when there are many cells. 
 
 #### Shade Level
 
-If a cell is surviving a long time, its color will getting darker and darker. However, to avoid color being too dark and hard to distinguish, the Shade level here will catagorized cells' survival time and the total ticks passed. If the cell has survived most of the ticks, it will be X times darker than the new cells, where X is the setting value. The less the lighter (E.g. X - 1 times, but stop at 1). This value only defines the maximum it can reach.
+If a cell is surviving a long time, its color will get darker and darker. However, to avoid color being too dark and hard to distinguish, the Shade level here will categorize cells' survival time, and the total ticks passed. If the cell has survived most of the ticks, it will be X times darker than the new cells, where X is the setting value. The less the lighter (E.g. X - 1 times, but stop at 1). This value only defines the maximum it can reach.
 
-When the value is 1, no shade will apply. This number must be an positive number, or a warning will appear.
+When the value is 1, no shade will apply. This number must be a positive number, or a warning will appear.
 
 ---
 
-Once you have finished set upm you may close the configuration by clicking X on the top right. **Your changes will be save immediately after you have changed the value. For text field, please press ENTER to confirm your decision.**
+Once you have finished set up, you may close the configuration by clicking X on the top right. **Your changes will be saved immediately after you have changed the value. For text field, please press ENTER to confirm your decision.**
 
 ### Typing and number
 
 For shade level and ticks to go to, the input box accept a number. **Please press enter to confirm** and if the input given cannot be parsed as a valid number, a warning will be given. Please double check your input and try again.
+
+
+## Extra Tips
+
+### Toolbar can be dragged away from the main panel
+
+By holding the gray bar on the left side panel, you may drag the panel to another desire location and expand your working space.
+
+![](./gui/manual/7.png)
+
+If you want to restore the layout, simply click the X you the right top, and it will go back to the main frame.
+
+### Survival time emitted
+
+Sometimes you may find that the cells' survival time cannot fit the UI and won't show correctly. In this case, you may hover your mouse to the cell and its exact number will appear.
+
+![](./gui/manual/8.png)
+
+### Slow initialization time
+
+When the program is generating maps (new map, loading file), it might be slow to response. Please be patient. 
+
+After initialization, it is expected to have faster response time. The suggested size of the map is no larger than (200x200)

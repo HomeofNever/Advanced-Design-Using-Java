@@ -256,11 +256,14 @@ public class GUIController {
             }
             UserSetting.setMaxLevelShade(i);
 
+
             updateMapView();
         } catch (NumberFormatException e) {
             Dialog.numberParseDialog(guiViewer, e);
         } catch (Exception e) {
             Dialog.genericWarningDialog(guiViewer, e);
+        } finally {
+            guiViewer.configurationPanel.updateSettings();
         }
     }
 
@@ -273,6 +276,21 @@ public class GUIController {
         guiViewer.rangeSelectionPanel.setVisible(true);
     }
 
+    /**
+     * Toolbar -> New Map handler
+     */
+    public void newMapDialog() {
+        try {
+            int[] res = Dialog.rowColInputDialog(guiViewer, mapModel.getRow(), mapModel.getCol());
+            if (res != null) {
+                setNewMap(new ConwayMap(res[0], res[1]));
+            }
+        } catch (NumberFormatException e) {
+            Dialog.numberParseDialog(guiViewer, e);
+        } catch (Exception e) {
+            Dialog.genericWarningDialog(guiViewer, e);
+        }
+    }
 
     /* Methods below are for internal batch update */
 
@@ -280,6 +298,7 @@ public class GUIController {
         mapModel = new MapModel(c);
         updateMapView();
         guiViewer.statusPanel.resetSimulation();
+        guiViewer.gameBoard.repaint();
     }
 
     private void updateMapView() {

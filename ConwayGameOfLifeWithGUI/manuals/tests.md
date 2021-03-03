@@ -29,7 +29,7 @@ ConwayMap is the a map represents the status of cells
 
 #### MapCollection
 
-MapCollection is a collection of ConwayMap, represent a progress from a single map
+MapCollection is a collection of ConwayMap, represent continuous progress from a single map
 
 - map index increments
 - collection reset
@@ -90,13 +90,13 @@ Commands to run these examples have also listed in the manual. It is believed th
 
 Game rules are also tested at `example2.txt` and `example3.txt` by stepping through the generated files.
 
-You may find the expected output in `tests/result` section. Use `diff` for the file generated from the program with corresponded command -- these should be identical or it means something goes wrong.
+You may find the expected output in `tests/result` section. Use `diff` for the file generated from the program with corresponded command -- these should be identical, or it means something goes wrong.
 
 Some examples inspired by [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
 ### GUI & Action test
 
-As the underlying data representation has both tested by unit test and the manual test section, for the GUI part, it is mostly focus whether the data bindings are working, or if target behaviors are reached.
+As the underlying data representation has both tested by the unit test and the manual test section, for the GUI part, it is mostly focused whether the data bindings are working, or if target behaviors are reached.
 
 #### Before simulation
 
@@ -110,31 +110,36 @@ You may find the status bar on the left bottom shown as "Ready to start"
 
 - warning when cell is pressed
 - calculated simulation status on the right bottom should be a positive number
-- top stepper number will changed as step forward and step back
+- top stepper number will change as step forward and step back
 - the number of live/dead cell on the bottom middle should update with the map
 
-**Notice: it is normal that the calculated simulation is 1 less then the cell survival time. The App calculated the survival at stage 0 with times 1**
+**Notice: it is normal that the calculated simulation is 1 less than the cell survival time. The App calculated the survival at stage 0 with times 1**
 
 #### Toolbar
 
 - `Set as Begin` should clear all cells' survival time (0 for dead, 1 for live)
+- `New Map` should pop up a dialog asking for row and give error if value cannot be parsed or less than 1 
 - `Reset` should set everything of the map to 0 but keep the row and col as the same
 - `Configuration` should invoke configuration panel
+- toolbar can be dragged out of the window and restore with no problem (by clicking the exit button of the pane)
 
 #### Save file
 
-- file with give name will appear and can be open via menu -> open file
+- file with given name will appear and can be open via a menu -> open file
 - range saving button result and override notice
 - filename format
+
+in the test folder, `example2-result` contains the result where saved range from 0 to 32, as a reference
 
 #### Configuration
 
 - setting persistence
 - setting update should immediately reflect to the board
-- cell color changes
+- cell color changes accordingly
 - hide/show cell survival time
-- cell shade changes
+- cell shade changes accordingly
 
 #### Warnings
 
-- At any time, the textfield expected number but failed to parse will give warning
+- at any time, textfields that expected number but failed to parse will give warning
+- at any time, if the action of textfield failed, the value will be restored to its previous value

@@ -15,6 +15,7 @@ public class VisualActionPanel extends JPanel {
 
     /* Components */
     private JButton resetButton;
+    private JButton newButton;
     private JButton setBeginButton;
     private JButton settingButton;
     private JToolBar toolBar;
@@ -27,10 +28,12 @@ public class VisualActionPanel extends JPanel {
 
         add(toolBar);
         resetButton = new JButton("Reset");
+        newButton = new JButton("New Map");
         setBeginButton = new JButton("Set as Begin");
         settingButton = new JButton("Settings");
         setBeginButton.setToolTipText("Set current map as a new game map");
         toolBar.add(resetButton);
+        toolBar.add(newButton);
         toolBar.add(setBeginButton);
         toolBar.add(settingButton);
 
@@ -44,5 +47,6 @@ public class VisualActionPanel extends JPanel {
         resetButton.addActionListener(e -> controller.resetButtonPressed());
         setBeginButton.addActionListener(e -> controller.setBeginButtonPressed());
         settingButton.addActionListener(e -> controller.openConfigurationDialog());
+        newButton.addActionListener(e -> controller.newMapDialog());
     }
 }

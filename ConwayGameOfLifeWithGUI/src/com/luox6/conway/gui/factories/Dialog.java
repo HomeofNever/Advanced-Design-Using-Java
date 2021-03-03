@@ -44,4 +44,38 @@ public class Dialog {
                 "Success",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    /**
+     * Asking user for map row and col
+     * @param c Frame to attach
+     * @param defaultRow Pre-filled row length
+     * @param defaultCol Pre-filled col length
+     * @return new int[] with row at int[0] and col at int[1], if user cancel or enter illegal value, null will be returned
+     * @throws NumberFormatException input value cannot be parsed as Integer
+     * @throws Exception Row/Col must be at least 2
+     */
+    public static int[] rowColInputDialog(Component c, int defaultRow, int defaultCol) throws NumberFormatException, Exception{
+        JTextField row = new JTextField(String.valueOf(defaultRow));
+        JTextField col = new JTextField(String.valueOf(defaultCol));
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Please enter map's row and col"),
+                new JLabel("Row"),
+                row,
+                new JLabel("Col"),
+                col
+        };
+        int result = JOptionPane.showConfirmDialog(c, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            int[] res = new int[2];
+            res[0] = Integer.parseInt(row.getText());
+            res[1] = Integer.parseInt(col.getText());
+            if (res[0] < 1 && res[1] < 1) {
+                throw new Exception("Row/Col must be at least 2!");
+            }
+
+            return res;
+        }
+
+        return null;
+    }
 }
