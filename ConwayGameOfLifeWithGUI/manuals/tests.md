@@ -6,9 +6,9 @@ The following methods are used when testing the program.
 
 A Java framework, JUnit5, has been used within the process. You may consult to `com.luox6.conway.test` for the written test cases.
 
-### Included Sections
+## Testing scenarios
 
-#### Cell
+### Cell
 
 Cell represents a single cell in the map
 
@@ -16,7 +16,7 @@ Cell represents a single cell in the map
 - set status of the cell
 - record survival times
 
-#### ConwayMap
+### ConwayMap
 
 ConwayMap is the a map represents the status of cells
 
@@ -27,7 +27,7 @@ ConwayMap is the a map represents the status of cells
 - `toString` string representation/output format
 - count cell statuses
 
-#### MapCollection
+### MapCollection
 
 MapCollection is a collection of ConwayMap, represent continuous progress from a single map
 
@@ -35,7 +35,7 @@ MapCollection is a collection of ConwayMap, represent continuous progress from a
 - collection reset
 - identify calculated indexes
 
-#### MapModel
+### MapModel
 
 MapModel include extra functionality over Collection, where view required. E.g. current viewing map index
 
@@ -44,7 +44,7 @@ MapModel include extra functionality over Collection, where view required. E.g. 
 - set (can calculate, if necessary) index to given location
 - input error handling
 
-The above have tested class's construction, mutations, and expected string representation.
+The above have tested model class's construction, mutations, and expected string representation.
 
 ### Run Unit Test 
 
@@ -94,7 +94,7 @@ You may find the expected output in `tests/result` section. Use `diff` for the f
 
 Some examples inspired by [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
-### GUI & Action test
+### GUI & Action test strategies
 
 As the underlying data representation has both tested by the unit test and the manual test section, for the GUI part, it is mostly focused whether the data bindings are working, or if target behaviors are reached.
 
@@ -133,7 +133,7 @@ in the test folder, `example2-result` contains the result where saved range from
 
 #### Configuration
 
-- setting persistence
+- setting persistence (after application closed)
 - setting update should immediately reflect to the board
 - cell color changes accordingly
 - hide/show cell survival time
