@@ -14,6 +14,11 @@ public class JCell extends JButton {
     private Cell cell;
     private GameBoard.PlayerTarget p;
 
+    /**
+     * Default constructor
+     * @param c Cell the GUI cell represent
+     * @param p PlayerTarget
+     */
     public JCell(Cell c, GameBoard.PlayerTarget p) {
         super();
         setOpaque(true);
@@ -23,10 +28,16 @@ public class JCell extends JButton {
         this.p = p;
     }
 
+    /** Getters and Setters **/
+
     public Cell getCell() {
         return cell;
     }
 
+    /**
+     * Update display of the Cell
+     * based on PlayerTarget
+     */
     public void updateDisplay() {
         setForeground(UserSetting.getMarkColor());
         switch(p) {

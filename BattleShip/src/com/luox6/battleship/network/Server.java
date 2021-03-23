@@ -6,7 +6,10 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.nio.charset.*;
 
-
+/**
+ * This Implementation derived from
+ * TicTocToe shown on the lecture
+ */
 public class Server implements Connectable {
     public Server () throws IOException {
         this(DEFAULT_PORT);

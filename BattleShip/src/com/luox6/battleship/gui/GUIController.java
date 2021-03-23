@@ -1,7 +1,9 @@
 package com.luox6.battleship.gui;
 
+import com.luox6.battleship.gui.component.ConfigurationPanel;
 import com.luox6.battleship.gui.factory.Dialog;
 import com.luox6.battleship.gui.model.PlayerBoard;
+import com.luox6.battleship.gui.model.UserSetting;
 import com.luox6.battleship.model.Cell;
 import com.luox6.battleship.model.Coordinate;
 import com.luox6.battleship.model.Directable;
@@ -11,6 +13,7 @@ import com.luox6.battleship.network.Connectable;
 import com.luox6.battleship.network.Protocol;
 import com.luox6.battleship.network.Server;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,7 +33,12 @@ public class GUIController {
     protected GUIViewer guiViewer;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-
+    /**
+     * Default Constructor
+     * @param playerBoard Game representation
+     * @param p Protocol for communication
+     * @param c Socket Connection between Server/Client
+     */
     public GUIController(PlayerBoard playerBoard, Protocol p, Connectable c) {
         // Init Model
         this.playerBoard = playerBoard;
@@ -58,6 +66,9 @@ public class GUIController {
         guiViewer.setVisible(true);
     }
 
+    /**
+     * Initialize GUI and PlayerBoard binding
+     */
     public void initBind() {
         guiViewer.statusPanel.updatePlayerTime(playerBoard.getTimeLimit(), GameBoard.PlayerTarget.SELF);
         guiViewer.statusPanel.updatePlayerTime(playerBoard.getTimeLimit(), GameBoard.PlayerTarget.ENEMY);
@@ -116,21 +127,65 @@ public class GUIController {
      * Action -> Configuration button handler
      */
     public void openConfigurationDialog() {
+        Dialog.genericWarningDialog(guiViewer, new Exception("Your changes will be effective after program restart!"));
         guiViewer.configurationPanel.setVisible(true);
     }
 
+    /**
+     * Configuration -> Discover Color
+     */
     public void setDiscoverColor() {
+        UserSetting.setDiscoverColor(JColorChooser.showDialog(guiViewer, "Set Discover Cell Color", UserSetting.getDiscoverColor()));
+        guiViewer.configurationPanel.updateSettings();
     }
 
-    public void setHiddenColor() {
-    }
-
+    /**
+     * Configuration -> Mark Color
+     */
     public void setMarkColor() {
+        UserSetting.setMarkColor(JColorChooser.showDialog(guiViewer, "Set Discover Cell Color", UserSetting.getDiscoverColor()));
+        guiViewer.configurationPanel.updateSettings();
     }
 
+    /**
+     * Configuration -> Grid Size
+     */
     public void setGridSize() {
+        try {
+            int[] data = Dialog.rowColInputDialog(guiViewer, UserSetting.getGridRow(), UserSetting.getGridCol());
+            if (data != null) {
+                UserSetting.setGridRow(data[0]);
+                UserSetting.setGridCol(data[1]);
+            }
+        } catch (Exception e) {
+            Dialog.genericWarningDialog(guiViewer, e);
+        }
+        guiViewer.configurationPanel.updateSettings();
     }
 
+    /**
+     * Configuration -> Time Limit
+     */
+    public void setTimeLimit(String s) {
+        try {
+            int i = Integer.parseInt(s);
+            if (i < 4) {
+                throw new Exception("Time should be at least 5 second!");
+            }
+            UserSetting.setTimeLimit(i);
+        } catch (NumberFormatException e) {
+            Dialog.numberParseDialog(guiViewer, e);
+        } catch (Exception e) {
+            Dialog.genericWarningDialog(guiViewer, e);
+        } finally {
+            guiViewer.configurationPanel.updateSettings();
+        }
+    }
+
+    /**
+     * Action when cell from self grid clicked
+     * @param coordinate Location of the cell
+     */
     public void selfCellClicked(Coordinate coordinate) {
         switch(playerBoard.getGameStatus()) {
             case INIT -> {
@@ -180,6 +235,10 @@ public class GUIController {
         }
     }
 
+    /**
+     * Action when cell from enemy grid clicked
+     * @param c Location of the cell
+     */
     public void enemyCellClicked(Coordinate c) {
         switch(playerBoard.getGameStatus()) {
             case INIT -> {
@@ -206,6 +265,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Toolbar -> ready button
+     */
     public void readyButtonPressed() {
         if (playerBoard.getGameStatus() == GameBoard.GameStatus.INIT) {
             GameBoard.PlayerStatus p = playerBoard.getPlayerStatus(GameBoard.PlayerTarget.SELF);
@@ -213,6 +275,7 @@ public class GUIController {
                 if (playerBoard.getUnsetShips().size() == 0){
                     playerBoard.setPlayerStatus(GameBoard.PlayerStatus.READY, GameBoard.PlayerTarget.SELF);
                     connection.send("%s".formatted(Protocol.GameCommand.READY));
+                    Dialog.genericSuccessDialog(guiViewer, "Ready set! Please wait for enemy...");
                 } else {
                     Dialog.genericWarningDialog(guiViewer, new Exception("You haven't finished setting ships!"));
                 }
@@ -222,6 +285,10 @@ public class GUIController {
         }
     }
 
+    /**
+     * Check if game should be ended and response
+     * accordingly
+     */
     public void concludeGame() {
         playerBoard.checkGameStatus();
         boolean next = false;
@@ -250,6 +317,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Update StatusBoard data
+     */
     public void updateTurn() {
         switch (playerBoard.getGameStatus()) {
             case SELF_TURN -> {

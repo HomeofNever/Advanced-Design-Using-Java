@@ -75,8 +75,12 @@ public class Dialog {
             int[] res = new int[2];
             res[0] = Integer.parseInt(row.getText());
             res[1] = Integer.parseInt(col.getText());
-            if (res[0] < 1 && res[1] < 1) {
-                throw new Exception("Row/Col must be at least 2!");
+            if (res[0] < 1 || res[1] < 1) {
+                throw new Exception("Row/Col must be at least 1!");
+            }
+
+            if (res[0] * res[1] < 18) {
+                throw new Exception("Row * Col must be at least 17!");
             }
 
             return res;
@@ -85,6 +89,11 @@ public class Dialog {
         return null;
     }
 
+    /**
+     * Client Server mode selection dialog
+     * @param c Component to attach
+     * @return Mode
+     */
     public static Protocol.Mode selectMode(Component c) {
         Object[] options = {
                 "Client",
@@ -100,6 +109,12 @@ public class Dialog {
         }
     }
 
+    /**
+     * generic confirm dialog
+     * @param c component to attach
+     * @param s Message to ask
+     * @return true if confirm, false otherwise
+     */
     public static boolean confirmDialog(Component c, String s) {
         int n = JOptionPane.showConfirmDialog(
                 c,
@@ -109,6 +124,11 @@ public class Dialog {
         return n == JOptionPane.YES_OPTION;
     }
 
+    /**
+     * Dialog for Client information
+     * @param c component to attach
+     * @return String [Server Address, Port, Player Name]
+     */
     public static String[] clientInitialDialog(Component c) {
         JTextField host = new JTextField("127.0.0.1");
         JTextField port = new JTextField(String.valueOf(Client.DEFAULT_PORT));
@@ -134,6 +154,11 @@ public class Dialog {
         return null;
     }
 
+    /**
+     * Dialog for server initialization information
+     * @param c Component to attach
+     * @return String[Port, Player Name]
+     */
     public static String[] serverInitialDialog(Component c) {
         JTextField port = new JTextField(String.valueOf(Client.DEFAULT_PORT));
         JTextField name = new JTextField();
@@ -155,6 +180,12 @@ public class Dialog {
         return null;
     }
 
+    /**
+     * Ask for which ship to add
+     * @param c Component to attach to
+     * @param ships List of StandbyShip waited to add to map
+     * @return StandbyShip need to be added
+     */
     public static StandbyShip setShipDialog(Component c, List<StandbyShip> ships) {
         String [] selections = new String[ships.size()];
         for (int i = 0; i < ships.size(); i++) {
@@ -175,6 +206,11 @@ public class Dialog {
         return null;
     }
 
+    /**
+     * Ask for ship direction
+     * @param c component to attached
+     * @return Direction
+     */
     public static Directable.Direction askDirectionDialog(Component c) {
         Object[] options = {
                 Directable.Direction.VERTICAL,
@@ -191,6 +227,12 @@ public class Dialog {
         }
     }
 
+    /**
+     * Show game result and offer next game
+     * @param c component to attach to
+     * @param message Win/Lose message
+     * @return true if next game, false otherwise
+     */
     public static boolean askNextGame(Component c, String message) {
         Object[] options = {
                 "Next Game",

@@ -5,6 +5,9 @@ import java.util.prefs.Preferences;
 
 /**
  * User setting persistence class
+ *
+ * @author Xinhao Luo
+ * @version 0.0.1
  */
 public class UserSetting {
     /**
@@ -13,7 +16,6 @@ public class UserSetting {
     private static final String USER_PREF_NODE = "luox6.battleship.userSetting";
 
     /* Keys belows are String Key refer to each of the settings */
-    private static final String HIDDEN_COLOR = "HIDDEN_COLOR";
     private static final String DISCOVER_COLOR = "DISCOVER_COLOR";
     private static final String MARK_COLOR = "MARK_COLOR";
     private static final String GRID_ROW = "GRID_ROW";
@@ -44,20 +46,15 @@ public class UserSetting {
     }
 
     /* Methods below are settings' getters and setters */
-    public static Color getDiscoverColor() {
-        return String2Color(prefs.get(DISCOVER_COLOR, Color2String(Color.BLACK)));
-    }
 
-    public static Color getHiddenColor() {
-        return String2Color(prefs.get(HIDDEN_COLOR, Color2String(Color.WHITE)));
-    }
+    public static Color getDiscoverColor() { return String2Color(prefs.get(DISCOVER_COLOR, Color2String(Color.BLACK))); }
 
     public static Color getMarkColor() {
         return String2Color(prefs.get(MARK_COLOR, Color2String(Color.RED)));
     }
 
-    public static void setHiddenColor(Color c) {
-        prefs.put(HIDDEN_COLOR, Color2String(c));
+    public static void setMarkColor(Color c) {
+        prefs.put(MARK_COLOR, Color2String(c));
     }
 
     public static void setDiscoverColor(Color deadColor) {

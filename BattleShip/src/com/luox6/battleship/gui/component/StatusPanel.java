@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatusPanel extends JPanel {
-
     /* Components */
     private JLabel selfNameLabel = new JLabel();
     private JLabel enemyNameLabel = new JLabel();
@@ -43,6 +42,11 @@ public class StatusPanel extends JPanel {
     }
 
 
+    /**
+     * Update player time limit
+     * @param time turn time in second
+     * @param t PlayerTarget
+     */
     public void updatePlayerTime(int time, GameBoard.PlayerTarget t) {
         switch (t) {
             case SELF -> selfTimeLabel.setText("%d".formatted(time));
@@ -50,6 +54,11 @@ public class StatusPanel extends JPanel {
         }
     }
 
+    /**
+     * Update name of player
+     * @param name String name of player
+     * @param t PlayerTarget
+     */
     public void updatePlayerName(String name, GameBoard.PlayerTarget t) {
         switch (t) {
             case SELF -> selfNameLabel.setText(name);
@@ -57,6 +66,11 @@ public class StatusPanel extends JPanel {
         }
     }
 
+    /**
+     * Update Player Score on StatusBoard
+     * @param score int Score
+     * @param t PlayerTarget
+     */
     public void updatePlayerScore(int score, GameBoard.PlayerTarget t) {
         switch (t) {
             case SELF -> selfScoreLabel.setText("%d".formatted(score));
@@ -64,6 +78,11 @@ public class StatusPanel extends JPanel {
         }
     }
 
+    /**
+     * Update current turn status
+     * @param name Player name
+     * @param time int time in second
+     */
     public void updateCurrentTurn(String name, Integer time) {
         currentTurnLabel.setText(name);
         currentTimeLabel.setText(time.toString());

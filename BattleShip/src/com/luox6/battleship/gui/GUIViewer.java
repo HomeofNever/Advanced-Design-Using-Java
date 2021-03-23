@@ -60,7 +60,6 @@ public class GUIViewer extends JFrame {
 
         // Set their locations
         setFrame();
-        // setPageStart();
         setCenter();
         setPageLeft();
         setPageEnd();

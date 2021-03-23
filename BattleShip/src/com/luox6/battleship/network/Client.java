@@ -10,6 +10,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/**
+ * This Implementation derived from
+ * TicTocToe shown on the lecture
+ */
 public class Client implements Connectable {
     public Client(String server) {
         this(server, DEFAULT_PORT);

@@ -9,22 +9,46 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Representation of Ship Map
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class GameMap {
+    /**
+     * Cell map
+     */
     private Cell map[][];
+
+    /**
+     * Map of <Ship id, Battleship>
+     */
     private Map<UUID, BattleShip> battleShips;
+
+    /**
+     * Map row
+     */
     private int row;
+
+    /**
+     * Map col
+     */
     private int col;
 
-    GameMap(int row, int col) {
+    /**
+     * Default Constructor
+     * @param row row num
+     * @param col col num
+     */
+    public GameMap(int row, int col) {
         this.row = row;
         this.col = col;
         init();
     }
 
-    public void reset() {
-        init();
-    }
-
+    /**
+     * Class initialization helper
+     */
     private void init() {
         map = new Cell[row][col];
         for (int i = 0; i < row; i++) {
@@ -84,6 +108,10 @@ public class GameMap {
         battleShips.put(bs.getShipId(), bs);
     }
 
+    /**
+     * Remove the id corresponded ship from the map
+     * @param id UUID ship id
+     */
     public void removeShip(UUID id) {
         BattleShip bs = battleShips.get(id);
         if (bs != null) {
@@ -98,6 +126,12 @@ public class GameMap {
         throw new RuntimeException("Try removing an non-existing ship: %s".formatted(id.toString()));
     }
 
+    /**
+     * Get Cell representation of the location coordinate
+     * represented
+     * @param c Coordinate location
+     * @return Cell if location is valid, null otherwise
+     */
     public Cell getCellByCoordinate(Coordinate c) {
         if (isValidCoordinate(c)) {
             return map[c.getX()][c.getY()];
@@ -106,16 +140,29 @@ public class GameMap {
         return null;
     }
 
+    /**
+     * Identify if given coordinate is on the map
+     * @param c Coordinate
+     * @return true if coordinate is on the Map, false otherwise
+     */
     public boolean isValidCoordinate(Coordinate c) {
         return c.getX() >= 0 && c.getX() < row && c.getY() >=0 && c.getY() < col;
     }
 
+    /**
+     * Mark given coordinate as discovered
+     * @param c Coordinate location to mark
+     */
     public void mark(Coordinate c) {
         if (isValidCoordinate(c)) {
             map[c.getX()][c.getY()].setDiscovered(true);
         }
     }
 
+    /**
+     * Identify is all ships are down on current map
+     * @return true if all ships are marked discovered, false otherwise
+     */
     public boolean allDown() {
         for (BattleShip bs : battleShips.values()) {
             for (Coordinate cs : bs.getShipSequence()) {

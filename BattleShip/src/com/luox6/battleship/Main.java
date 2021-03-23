@@ -5,7 +5,6 @@ import com.luox6.battleship.gui.GUIViewer;
 import com.luox6.battleship.gui.factory.Dialog;
 import com.luox6.battleship.gui.model.PlayerBoard;
 import com.luox6.battleship.gui.model.UserSetting;
-import com.luox6.battleship.model.GameBoard;
 import com.luox6.battleship.model.ship.StandbyShip;
 import com.luox6.battleship.network.Client;
 import com.luox6.battleship.network.Connectable;
@@ -15,11 +14,15 @@ import com.luox6.battleship.network.Server;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * Application Battleship main entry
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class Main {
     /**
      * This main method is main for test purpose.
@@ -64,6 +67,7 @@ public class Main {
         final Protocol[] pr = new Protocol[1];
         final Connectable[] c = new Connectable[1];
         ExecutorService executor = Executors.newSingleThreadExecutor();
+        // Sync process
         Future<Boolean> res = executor.submit(() -> {
             try {
                 if (m == Protocol.Mode.SERVER) {
@@ -133,6 +137,7 @@ public class Main {
 
         initDialog.setVisible(true);
 
+        // Wait for process
         try {
             Boolean r = res.get();
             if (!r) {
@@ -159,12 +164,19 @@ public class Main {
                 if (response != null) {
                     c[0].send(response);
                 }
-            } while (true);
+            } while (!c[0].isConnectionClosed());
         });
         // Launch GUI
         guiController.start();
     }
 
+    /** Helper functions for server/client init **/
+
+    /**
+     * This function used to separate process with NEXT command
+     * @param c Connectable Server/Client has already connected to client
+     * @param pr Protocol Process response
+     */
     private static void awaitSync(Connectable[] c, Protocol[] pr) {
         c[0].send(Protocol.GameCommand.NEXT.toString());
         do {
@@ -178,7 +190,11 @@ public class Main {
         } while (true);
     }
 
-    public static Object[] getClientInfo() {
+    /**
+     * Dialog for client info
+     * @return [String address, int port, String name]
+     */
+    private static Object[] getClientInfo() {
         String[] config = Dialog.clientInitialDialog(null);
         if (config == null) {
             System.exit(1);
@@ -188,6 +204,7 @@ public class Main {
             String address = config[0];
             int port = Integer.parseInt(config[1]);
             String name = config[2];
+            validName(name);
 
             if (name.length() < 1) {
                 throw new Exception("Name must have at least 1 characters");
@@ -207,7 +224,11 @@ public class Main {
         }
     }
 
-    public static Object[] getServerInfo() {
+    /**
+     * Dialog for Server Info
+     * @return [String address, int port]
+     */
+    private static Object[] getServerInfo() {
         String[] config = Dialog.serverInitialDialog(null);
         if (config == null) {
             System.exit(1);
@@ -216,22 +237,43 @@ public class Main {
         try {
             int port = Integer.parseInt(config[0]);
             String name = config[1];
+            validName(name);
 
-            if (name.length() > 0) {
-                Object[] res = new Object[2];
-                res[0] = port;
-                res[1] = name;
+            Object[] res = new Object[2];
+            res[0] = port;
+            res[1] = name;
 
-                return res;
-            }
-
-            throw new Exception("Name must be at least 1 character");
+            return res;
         } catch (NumberFormatException e) {
             Dialog.numberParseDialog(null, e);
             return null;
         } catch (Exception e) {
             Dialog.genericWarningDialog(null, e);
             return null;
+        }
+    }
+
+    /**
+     * Validate User input name
+     * @param s String name
+     * @throws Exception failed reason
+     */
+    public static void validName(String s) throws Exception {
+        if (s.length() < 1 || s.length() > 20) {
+            throw new Exception("Name must be between 1-20 characters");
+        }
+
+        boolean flag = true;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '1' && c <= '9'))) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (!flag) {
+            throw new Exception("Character can only be a-z, A-Z, 0-9");
         }
     }
 }

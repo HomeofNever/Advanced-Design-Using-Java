@@ -16,6 +16,7 @@ public class ConfigurationPanel extends JFrame {
     private JButton discoverCellColor;
     private JButton markColor;
     private JButton gridSize;
+    private JTextField timeLimit;
 
     /**
      * Controller Reference
@@ -29,19 +30,21 @@ public class ConfigurationPanel extends JFrame {
         setTitle("Configuration");
         setLayout(new GridLayout(4, 2));
 
-        hiddenCellColor = Button.transparentButton("Click");
         discoverCellColor = Button.transparentButton("Click");
         markColor = Button.transparentButton("Click");
+        gridSize = Button.transparentButton("Click to view/set");
+        gridSize = new JButton("Click");
+        timeLimit = new JTextField();
 
         // Add all components.
-        add(new JLabel("\tHidden Cell Color"));
-        add(hiddenCellColor);
         add(new JLabel("\tDiscover Cell Color:"));
         add(discoverCellColor);
         add(new JLabel("\tShip Mark Color:"));
         add(markColor);
-        gridSize = new JButton("Set Grid Size");
+        add(new JLabel("Set Grid Size"));
         add(gridSize);
+        add(new JLabel("Time limit per round"));
+        add(timeLimit);
         pack();
 
         setLocationRelativeTo(null);
@@ -53,18 +56,18 @@ public class ConfigurationPanel extends JFrame {
      * Update panel with latest settings
      */
     public void updateSettings() {
-        hiddenCellColor.setBackground(UserSetting.getHiddenColor());
         discoverCellColor.setBackground(UserSetting.getDiscoverColor());
         markColor.setBackground(UserSetting.getMarkColor());
+        timeLimit.setText(String.valueOf(UserSetting.getTimeLimit()));
     }
 
     /**
      * Bind action to Controller
      */
     private void setActions() {
-        hiddenCellColor.addActionListener(e -> controller.setHiddenColor());
         discoverCellColor.addActionListener(e -> controller.setDiscoverColor());
         markColor.addActionListener(e -> controller.setMarkColor());
         gridSize.addActionListener(e -> controller.setGridSize());
+        timeLimit.addActionListener(e -> controller.setTimeLimit(timeLimit.getText()));
     }
 }

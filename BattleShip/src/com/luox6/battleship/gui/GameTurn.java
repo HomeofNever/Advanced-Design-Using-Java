@@ -5,6 +5,11 @@ import com.luox6.battleship.model.GameBoard;
 import com.luox6.battleship.network.Connectable;
 import com.luox6.battleship.network.Protocol;
 
+/**
+ * Thread calculate Game turn
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class GameTurn extends Thread {
 
     private PlayerBoard playerBoard;
@@ -13,7 +18,12 @@ public class GameTurn extends Thread {
     public boolean stop = false;
     private boolean updated = false;
 
-
+    /**
+     * Default Game Turn thread
+     * @param playerBoard Board will be controlled
+     * @param guiController GUI
+     * @param connection Peer connection
+     */
     public GameTurn(PlayerBoard playerBoard, GUIController guiController, Connectable connection) {
         this.playerBoard = playerBoard;
         this.guiController = guiController;
@@ -21,13 +31,13 @@ public class GameTurn extends Thread {
     }
 
     /**
-     * Run a turn in the game
+     * Run turns in the game
      */
     @Override
     public void run() {
         Integer time = playerBoard.getTimeLimit();
 
-        while(time > 0 && !stop) {
+        while(time > 0 && !stop && !connection.isConnectionClosed()) {
             if (!updated) {
                 guiController.guiViewer.shipBoard.updateBoard(GameBoard.PlayerTarget.SELF);
                 updated = true;

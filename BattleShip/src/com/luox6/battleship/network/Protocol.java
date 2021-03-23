@@ -10,6 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Game Protocol
+ * The Protocol will mostly receive message and act toward the
+ * GameBoard directly. Client/Server are expected to detect changes
+ * directly via GameBoard
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class Protocol {
     public static enum Mode {CLIENT, SERVER};
     public static enum GameCommand {VERSION, WHAT, SHIPS, STANDBY_SHIPS, GRID, READY, MARK, TIME, RESTART, ERROR, OK, NEXT, NAME, STATUS, CURRENT_TIME};
@@ -18,6 +26,10 @@ public class Protocol {
     public static final String SEPARATOR = "#";
     private GameBoard gameBoard;
 
+    /**
+     * Default Constructor
+     * @param g GameBoard reflect changes from received message
+     */
     public Protocol(GameBoard g) {
         if (g.getGameStatus() != GameBoard.GameStatus.INIT) {
             throw new IllegalArgumentException("GameBoard passed in when it is not in init stage");
@@ -29,14 +41,11 @@ public class Protocol {
         return command.split(SEPARATOR);
     }
 
-    public static String buildErrorMessage(String error) {
-        return "%s#%s".formatted(GameCommand.ERROR, error);
-    }
-
-    public static boolean isOK (String s) {
-        return s.equals(GameCommand.OK.toString());
-    }
-
+    /**
+     * Main processor
+     * @param command String message from peer
+     * @return String response if necessary, null if no response needed
+     */
     public String process(String command) {
         if (isOK(command)) return null;
         StringBuilder response = new StringBuilder("%s".formatted(GameCommand.OK));
@@ -147,6 +156,10 @@ public class Protocol {
         return response.toString();
     }
 
+    /**
+     * Initialize all necessary part of the game when app started
+     * @param c Connectable, should have connected to the peer
+     */
     public void init(Connectable c) {
         c.send("%s#%s".formatted(GameCommand.WHAT, GameCommand.GRID));
         c.send(process(c.receive()));
@@ -158,11 +171,29 @@ public class Protocol {
         c.send(process(c.receive()));
     }
 
+    /**
+     * Exchange ships info
+     * @param c Connectable, should have connected to peer
+     */
     public void sendShips(Connectable c) {
         c.send("%s#%s".formatted(GameCommand.WHAT, GameCommand.SHIPS));
     }
 
+    /**
+     * Send a mark ship request
+     * @param c Coordinate, location of the cell
+     * @param connection Connectable, should have already connected to the peer
+     */
     public static void markShip(Coordinate c, Connectable connection) {
         connection.send("%s#%s".formatted(GameCommand.MARK, c.toString()));
+    }
+
+    /**
+     * Check if string is valid OK response (echo)
+     * @param s String message
+     * @return boolean true if it is OK, false otherwise
+     */
+    public static boolean isOK (String s) {
+        return s.equals(GameCommand.OK.toString());
     }
 }

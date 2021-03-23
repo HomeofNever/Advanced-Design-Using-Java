@@ -9,11 +9,19 @@ import javafx.scene.shape.Box;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main player board
+ */
 public class ShipBoard extends JPanel {
+    /* component */
     private JPanel enemyGrid;
     private JPanel selfGrid;
     private JCell[][] enemyCell;
     private JCell[][] selfCell;
+
+    /**
+     * Controller Reference
+     */
     private GUIController guiController;
 
     public ShipBoard(GUIController guiController) {
@@ -22,6 +30,12 @@ public class ShipBoard extends JPanel {
         this.guiController = guiController;
     }
 
+    /**
+     * GUI board initialization
+     * @param row map row
+     * @param col map col
+     * @param pb PlayerBoard
+     */
     public void init(int row, int col, PlayerBoard pb) {
         if (selfGrid == null && enemyGrid == null) {
             selfGrid = new JPanel(new GridLayout(row, col, 1, 1));
@@ -40,6 +54,12 @@ public class ShipBoard extends JPanel {
         reset(row, col, pb);
     }
 
+    /**
+     * Reset game map
+     * @param row int map row
+     * @param col int map col
+     * @param pb PlayerBoard with status
+     */
     public void reset(int row, int col, PlayerBoard pb) {
         selfGrid.removeAll();
         enemyGrid.removeAll();
@@ -78,6 +98,10 @@ public class ShipBoard extends JPanel {
         }
     }
 
+    /**
+     * Update Grid display
+     * @param p PlayerTarget decide which player's board to update
+     */
     public void updateBoard(GameBoard.PlayerTarget p) {
         switch(p) {
             case SELF -> {
