@@ -1,4 +1,4 @@
-# Conway Game of Life
+# BattleShip
 
 ## Environment
 
@@ -80,7 +80,7 @@ sh scripts/run.sh
 
 ### Windows
 
-Open the powershell and nevigate to the project root directory
+Open the powershell and navigate to the project root directory
 
 #### Compile
 
