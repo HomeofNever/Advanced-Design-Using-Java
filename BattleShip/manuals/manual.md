@@ -1,269 +1,122 @@
 # Manual  
 
-This is the user manual of Conway Game of Life simulator.  
+This is the user manual of BattleShip Game.  
 You may find detail program usage and error message explanation here.
-
-# CLI
-
-## Examples Args  
-
-Please replace `...` with commands corresponed to your OS specify in `readme.md`.
-
-```bash
-... tests/example1.txt tests/result/example1 21
-... tests/example2.txt tests/result/example2 5
-... tests/example3.txt tests/result/example3 50
-```
-
-### Linux Example
-
-Here is how linux system should run the args, an example.
-
-```bash
-sh scripts/run.sh
-sh scripts/run.sh tests/example1.txt tests/result/example1 21
-sh scripts/run.sh tests/example2.txt tests/result/example2 5
-sh scripts/run.sh tests/example3.txt tests/result/example3 50
-sh scripts/run.sh tests/invalid1.txt tests/result/example1 1
-sh scripts/run.sh tests/invalid2.txt tests/result/example1 1
-sh scripts/run.sh tests/invalid3.txt tests/result/example1 1
-sh scripts/run.sh tests/invalid4.txt tests/result/example1 1
-sh scripts/run.sh tests/invalid5.txt tests/result/example1 1
-sh scripts/run.sh tests/invalid5.txt tests/result/example1 -1
-```
-
-### Bad Examples  
-
-```bash
-... tests/invalid1.txt tests/result/example1 1
-Err: [seedFile] Invalid row/col, must be positive integer larger than 2
-... tests/invalid2.txt tests/result/example1 1
-Err: [seedFile] Invalid row/col, must be positive integer larger than 2
-... tests/invalid3.txt tests/result/example1 1
-Err: [seedFile] Unexpected cell type 2
-... tests/invalid4.txt tests/result/example1 1
-Err: [seedFile] Unexpected col length at row index 1
-... tests/invalid5.txt tests/result/example1 1
-Cannot invoke "String.split(String)" because "<local1>" is null
-... tests/example3.txt tests/result/example1 -1
-Err: [input] step -1 is invalid
-```
-
-## Screenshot
-
-Here is an example screenshot of how it looks like when program runs, we will talk about each arguments in the following sections. 
-
-![](./screenshot.png)
-
-### Basic Usage
-
-If incorrect/missing arguments given, the following message will occur.
-
-```bash
-$ sh scripts/run/sh                                            
-Args: <input> <output> <step>
-```
-
-## Inputs  
-
-In this section, program usage will be presented, as well as input file format.
-
-### Command line  
-
-Please refer to `readme.md`, looking for commands for your OS. Here each argument will be explained in details.
-
-#### `<input>`
-
-The path to the seed file. The file format is defined below.
-
-##### Input File format  
-
-- The first line contains, in order, the number of rows, and the number of columns in the grid, separated by a comma and a space. E.g., 5, 7 means that there are 5 rows and 7 columns in the grid. There are no spaces after the number of columns.
-- All lines starting from the second one contain the state of one row in the grid, starting with row #0. The state of each cell is designated with either 0 (cell is dead) or 1 (cell is alive). The states of individual cells are separated by a comma followed by a space (there is no comma and/or space after the last 0 or 1 in the line). For example, if the third line of the file (the second line of the grid part of the file) is 0, 0, 0, 1, 0, 0, 0 it corresponds to the following cell states in row[1]: row[1][0], row[1][1], row[1][2], row[1][4], row[1][5], and row[1][6] are dead, and row[1][3] is alive.
-- All lines end with the new line character.
-
-###### Example  
-
-```
-5, 7
-0, 0, 0, 0, 0, 0, 0
-0, 0, 0, 1, 0, 0, 0
-0, 0, 0, 1, 1, 1, 1
-1, 0, 0, 0, 1, 1, 1
-1, 1, 1, 1, 1, 1, 1
-```
-
-You may find more examples under `tests/` folder.
-
-#### `<output>`
-
-The path to the directory where results should be stored. If the directory does not exist, program will generate all necessary parent directories. Each file inside the directory will follow the following format: 
-
-```
-<seedFilename>.<currentStep>.txt
-```
-
-The `currentStep` will be started from `0`, the origin seed file, and will end in given `<step>` parameter.
-
-##### Output File Format  
-
-
-The output file example may be found at `tests/result/`. The format of the file is the same as the input file.
-
-
-#### `<step>`  
-
-The number of step the simulation should run. This should be a positive integer.
-
-## Errors  
-
-Here we have listed some possible errors when using the program and what could you do when you have encountered them.
-We have also provided some good and bad examples in next section.
-
-### `Err: [io] Output path must be a directory`  
-
-The specified `<output>` exists and is not a directory. Please specify another available location.
-
-### `Err: [io] Failed to create output directory`  
-
-The specified `<output>` does not exist, but program failed to create corresponded parents directories. Sometimes it may be system error, but please ensure the path enter is valid for your current OS.
-
-### `Err: [input] step x is invalid`  
-
-This happened when step is less than 0. Please specify a number equal to or larger than 0.
-
-### `An error occur while processing files: `  
-
-An `IOException` occurs. Possibly due to non-existence of a specified file, or other system issue. Please read stack for more info.
-
-### `Err: [input] unable to parse "x" as integer`  
-
-Either seed file row/col or step is not a valid integer representation. Please double check your input. 
-
-### `Err: [seedFile] unable to identify row/col of the map`  
-
-The first line of the seed file doesn't follow the `row, col` format and can't be parsed.
-
-### `Err: [seedFile] Invalid row/col, must be positive integer larger than 2`  
-
-Row or column integer representation in the seedFile is invalid.
-
-### `Err: [seedFile] Unexpected col length at row index x`  
-
-When reading seed file, a row is missing some cell representation. Please check if your file is corrupted.
-
-### `Err: [seedFile] Unexpected cell type x`  
-
-When reading a specific cell in the seed file, program cannot recognize its status. Please refer to file format section for the correct types.
-
-### `Cannot invoke "String.split(String)" because "<local1>" is null`  
-
-Seed file is possibly empty. Please check if correct seed file is given.
 
 # GUI
 
 ## Starting GUI
 
-To start GUI, follow the command in `README.md` and when you see console appears: `Starting GUI...`. The application has now started. It may take a while for the application window to show.
+To start GUI, follow the command in `README.md`. It may take a while for the application window to show.
 
-## Basic Usage
+## Basic Steps
 
-The appearance of the Application may varies on different platforms. For example, on Linux, it may look like this: 
+### Set up a Server
+
+In order to start a game, first a server needed to be set up.
 
 ![](./gui/manual/1.png)
 
-On Windows:
+Choose server mode and enter all necessary information. Then the server side will notice await client connection. 
+
+Then, open up another program with Client mode. Here is an example of information will be asked when starting program as client
 
 ![](./gui/manual/2.png)
 
-The functionality should be the same, however. 
+#### Player name limitation 
 
-### Simulation status
+Player name can now only use character in a-zA-Z0-9 with length 1-20. Program will repeatedly ask for info if standard not met.
 
-The bottom line of the application indicate whether the simulation is in progress. For example, on the graph above, the simulation is `Ready to Start`, once you have tried to go to other stage (by clicking `<<` or `>>` on the top, type number on the box between the buttons), the status will changed into `simulation in progress...`. The cell status will update in real time you switch to different stage/map
+Right now, the server and the client may have the same player name. **It is recommended that different name used during game play**
 
-### Change cell status
+#### Network Issue
 
-There are two ways to change map status:
+However, if you enter wrong network information (address/port). The program will fail and exit
 
-- Load file using File menu on the top
-- Manually click the map
+### Main Frame
 
-Each of the block is clickable, and you may toggle the cell status (live or dead). However, this action can only be done before the simutaion has started. You will see a warning if you tried to change the stage when simulation is in progress. 
-
-**Notice: You may find cell survival time > current tick index, that's because App counts initial LIVE cell with 1 tick survival time**
+When client and server finished syncing, the main frame will be shown as following.
 
 ![](./gui/manual/3.png)
 
-#### Set as Begin
+The left board will be self player board, where ship will be set using it. The right board will represent enemy's board and self player will hit target using that board.
 
-However, if you still want to edit the map, you may use the button `Set as Begin` on the toolbar located on the left side of the map. This function will set the current map as a new round of simulation so that you can edit the map and run the simulation from that point. 
+#### Set Ship
 
-**Notice: this action will clear all survival times, previous maps, etc. and only keeps the cell statuses.**
+In order to get started, both player needs to set up the ships on their board first. To set ship, click on any cell where you would like the ship to have. The cell you clicked will be the head of the ship. 
 
+There will be two follow-up dialogs allows you to:
 
-#### Reset
-
-If you want to reset the map but keeps the map row/col, click the button and a blank map will be set
-
-#### New Map
-
-If you want to manually set the map, click the button and enter the row and col you want accordingly. It will create an empty map with given size for you. Please note that all existing cell/map data will be destroyed.
-
-### Load&Save
-
-You may also load and save the result for future usage. You may find these actions under `File` Menu.
-
-The file format could be found above #CLI Input section
-
-#### Load file
-
-When you click `Open file...`, a dialog will appear and ask for the file you want to load. If the file you choose cannot be loaded, an error message will appear 
-
-![](./gui/manual/4.png)
-
-
-You may consult #CLI Error section for more info
-
-#### Save file
-
-When you click `Save Current map as...`, a dialog will ask for name and location to save the file. 
-
-`Save range of maps as...`, however, will prompt a sub panel, asking for more information. Please type the start range and end range accordingly.
+- choose which ship to add
+- choose ship direction
 
 ![](./gui/manual/5.png)
 
-##### Filename format
-
-Since there may be multiple files generated at this point, to avoid overwriting result, string `%1d` in the filename format will be replaced with map index. 
-
-Click save button and choose a directory. Please be sure the directory **does not** contain other files with names that has the same output pattern, or it might be overwritten. 
-
-You may change the range save multiple different range. Once you have done, simply close the window by clicking the X on the top right.
-
-
-### Configuration
-
-You may change the UI of the application by editing configuration. To open configuration panel, you may use the `Settings` button on the toolbar, or the `Configuration` button under `Actions` menu. 
+After setting a ship, board will show the corresponded cell using 'X' sign. In order to remove a ship from the location, click the cell with 'X' sign, and it will remove the ship at that location. The cell does not necessary to be the head of the ship.
 
 ![](./gui/manual/6.png)
 
+When all ships are set, any further clicks will bring to the following:
+
+![](./gui/manual/7.png)
+
+#### Start the turn
+
+Once you are ready, click on the ready button on the left. Once both side are ready, the following notice will appear: 
+
+![](./gui/manual/8.png)
+
+Now the game has officially started. The turn and time will be shown on the status board below
+
+![](./gui/manual/9.png)
+
+When it is your turn, click on the enemy board that haven't been discovered, and if there is a ship, an 'X' will show on the cell.
+
+![](./gui/manual/11.png)
+
+And on the enemy point of view, they will see the block discovered like the following:
+
+![](./gui/manual/10.png)
+
+The win condition will be:
+
+- The first player revealed all enemy's ship
+- The enemy didn't make a move during given time frame
+
+Once one of the conditions is met, a result page will show and both players can decide whether to move to next game or not. The first player click the next game will be prompted the following:
+
+![](./gui/manual/12.png)
+
+Once the enemy decided next game, click on OK to move start the new game.
+
+### Configuration 
+
+![](./gui/manual/4.png)
+
+You may change the UI of the application by editing configuration. To open configuration panel, you may use the `Settings` button on the toolbar, or the `Configuration` button under `Actions` menu. 
+
+Please do not edit settings during game turn.
+
+Notice: 
+
+- **`Grid Size` and `Time Limit` will be sync from the server if program started with client mode.**
+- All changes will take effective after program restart 
 
 #### Colors
 
-You may change the color of based on cell status, and the text color over it. Simply click the color blocks on the right column, and a color chooser will appear. 
+You may change the color of based on cell status, and the text/mark color over it. Simply click the color blocks on the right column, and a color chooser will appear. 
 
 Once you have decided a color, click ok, and you may find the map appear changed at the same time.
 
-#### Survival Time
+Notice: **All color configuration won't be sync with the client**
 
-Click the checkbox to toggle number on the cell. You may find there is an update delay when there are many cells. 
+#### Time limit per round 
 
-#### Shade Level
+Time (in second) each move needs to be done. Min second allowed is 5.
 
-If a cell is surviving a long time, its color will get darker and darker. However, to avoid color being too dark and hard to distinguish, the Shade level here will categorize cells' survival time, and the total ticks passed. If the cell has survived most of the ticks, it will be X times darker than the new cells, where X is the setting value. The less the lighter (E.g. X - 1 times, but stop at 1). This value only defines the maximum it can reach.
+#### Grid Size
 
-When the value is 1, no shade will apply. This number must be a positive number, or a warning will appear.
+The size of the grid. When clicked, a dialog will prompt current settings, and you may change at this point. Row and col must be larger than 0, and the total number of cell must be at least 17 so that all ships can fit in the grid.
 
 ---
 
@@ -271,27 +124,46 @@ Once you have finished set up, you may close the configuration by clicking X on 
 
 ### Typing and number
 
-For shade level and ticks to go to, the input box accept a number. **Please press enter to confirm** and if the input given cannot be parsed as a valid number, a warning will be given. Please double check your input and try again.
+For input box accept a number. **Please press enter to confirm** and if the input given cannot be parsed as a valid number, a warning will be given. Please double check your input and try again.
+
+## Error Messages
+
+Here are some examples of the error messages
+
+- Ship overlapped 
+    - When set the ship, there are another ships already block the way. Please double check your input
+- Please wait for your turn
+    - When you click the enemy board when it is not your turn, this warning will be given
+- Invalid Coordinate
+    - Some part of the ship will be out of the map range, please double check your input
 
 
-## Extra Tips
+### Limitations
 
-### Toolbar can be dragged away from the main panel
+Currently, there are some limitation/inconsistency you may find during game play
 
-By holding the gray bar on the left side panel, you may drag the panel to another desire location and expand your working space.
+#### Unstable network
 
-![](./gui/manual/7.png)
+This game currently does not tolerate any network issue including latency larger than 2 seconds. You may find game behave abnormally if using under bad network condition
 
-If you want to restore the layout, simply click the X you the right top, and it will go back to the main frame.
+#### Client/Server Exit
 
-### Survival time emitted
+If either Client/Server exited during game play, the other side won't be notified, and their game will freeze. 
 
-Sometimes you may find that the cells' survival time cannot fit the UI and won't show correctly. In this case, you may hover your mouse to the cell and its exact number will appear.
+#### Starting game
 
-![](./gui/manual/8.png)
+The starting notice mentioned above **may postponed for around 3 seconds after both side are ready due to be some final data synchronization and time frame adjustment.** 
 
-### Slow initialization time
+#### Notification
 
-When the program is generating maps (new map, loading file), it might be slow to response. Please be patient. 
+Please dismiss any Dialog as quick as possible, as it may block the game process. Failed to do so may lead the game out of sync. 
 
-After initialization, it is expected to have faster response time. The suggested size of the map is no larger than (200x200)
+#### Time count
+
+Currently, time limits are counted by the players themselves. There may be around 1-2 seconds display delay, but the real time count should still be correct.
+
+### Long initialization time
+
+When the program is generating maps (new map), it might be slow to response. Please be patient. 
+
+The suggested size of the map is no larger than (30x30)
