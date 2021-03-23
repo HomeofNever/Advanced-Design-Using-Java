@@ -24,9 +24,10 @@ import java.util.concurrent.Future;
  * @version 0.0.1
  */
 public class Main {
+
     /**
-     * This main method is main for test purpose.
-     * @param args
+     * Main Application entry
+     * @param args String of args, currently not in use
      */
     public static void main(String[] args) {
         // We need to gather: mode, server name, etc.
@@ -89,6 +90,7 @@ public class Main {
                 int row = UserSetting.getGridRow();
                 int col = UserSetting.getGridCol();
 
+                // @TODO Ships are currently hard-coded
                 List<StandbyShip> ships = new ArrayList<>();
                 ships.add(new StandbyShip(5)); // Carrier
                 ships.add(new StandbyShip(4)); // Battleship

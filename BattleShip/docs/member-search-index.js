@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.luox6.battleship","c":"Main","l":"Main()","u":"%3Cinit%3E()"},{"p":"com.luox6.battleship","c":"Main","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"com.luox6.battleship","c":"Main","l":"validName(String)","u":"validName(java.lang.String)"}];updateSearchResults();
