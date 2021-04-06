@@ -126,6 +126,6 @@ public class ConfigurationPanel extends JFrame {
         valueT.addActionListener(e -> controller.setValueT(valueT.getText()));
         valueLambda.addActionListener(e -> controller.setValueLambda(valueLambda.getText()));
         numThread.addActionListener(e -> controller.setNumThread(numThread.getText()));
-        numStep.addActionListener(e -> controller.setNumStep(numThread.getText()));
+        numStep.addActionListener(e -> controller.setNumStep(numStep.getText()));
     }
 }

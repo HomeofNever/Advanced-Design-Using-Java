@@ -2,7 +2,6 @@ package com.luox6.epidemic.model;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -106,6 +105,16 @@ public class Graph {
             nodes.put(nd.getKey(), new Node(nd.getValue(), true));
         }
 
+        // Parameters
+        n = g.n;
+        k = g.k;
+        s = g.s;
+        d = g.d;
+        t = g.t;
+        lambda = g.lambda;
+        numThread = g.numThread;
+        seed = g.seed;
+
         init();
 
         infectedCount.set(g.getInfectedCount());
@@ -189,23 +198,24 @@ public class Graph {
      * If multiple calls on this method, request will be
      * execute one at a time.
      */
-    public void simulate() {
+    public void simulate() throws ExecutionException, InterruptedException {
         simulationLock.lock();
         // First, go through all nodes, and set node to death or recovered, if necessary
+        // and adjust adj list accordingly
         adjustDeadRecovered();
 
         // Count how many nodes should be infected
         int nextInfected = (int) Math.ceil(infectedCount.get() * lambda);
         Set<String> susList = getSusceptibleNeighbors();
         // Infect based on lambda, and update count accordingly
-        infectNodes(susList, nextInfected >= susList.size());
+        infectNodes(susList, nextInfected);
         // Notify node to incur if necessary
         tickNodes();
         ++tick;
         simulationLock.unlock();
     }
 
-    private void tickNodes() {
+    private void tickNodes() throws ExecutionException, InterruptedException {
         String[] nds = adjList.keySet().toArray(new String[0]);
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(nds.length);
         List<Future<List<String>>> threadList = new LinkedList<>();
@@ -220,15 +230,11 @@ public class Graph {
         }
 
         for (Future<List<String>> f : threadList) {
-            try {
-                f.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            f.get();
         } // Wait for execution
     }
 
-    private void adjustDeadRecovered() {
+    private void adjustDeadRecovered() throws ExecutionException, InterruptedException {
         String[] nds = adjList.keySet().toArray(new String[0]);
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(nds.length);
         List<Future<List<String>>> threadList = new LinkedList<>();
@@ -255,20 +261,16 @@ public class Graph {
         }
 
         for (Future<List<String>> f : threadList) {
-            try {
-                for (String i : f.get()) {
-                    adjList.remove(i);
-                    for (HashSet<String> ls : adjList.values()) {
-                        ls.remove(i);
-                    }
+            for (String i : f.get()) {
+                adjList.remove(i);
+                for (HashSet<String> ls : adjList.values()) {
+                    ls.remove(i);
                 }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
             }
         }
     }
 
-    public Set<String> getSusceptibleNeighbors() {
+    public Set<String> getSusceptibleNeighbors() throws ExecutionException, InterruptedException {
         String[] nds = adjList.keySet().toArray(new String[0]);
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(nds.length);
         List<Future<Set<String>>> threadList = new LinkedList<>();
@@ -279,7 +281,8 @@ public class Graph {
                     Node nd = nodes.get(nds[i]);
                     if (nd.getStatus() == Node.STATUS.INFECTIOUS) {
                         for (String ns : adjList.get(nd.getName())) {
-                            if (nodes.get(ns).getStatus() != Node.STATUS.RECOVERED) {
+                            Node.STATUS status = nodes.get(ns).getStatus();
+                            if (status != Node.STATUS.RECOVERED && status != Node.STATUS.INFECTIOUS) {
                                 ls.add(ns);
                             }
                         }
@@ -292,26 +295,23 @@ public class Graph {
 
         Set<String> res = new HashSet<>();
         for (Future<Set<String>> f : threadList) {
-            try {
-                res.addAll(f.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            res.addAll(f.get());
         }
 
         return res;
     }
 
-    private void infectNodes(Collection<String> c, boolean possibility) {
+    private void infectNodes(Collection<String> c, int shouldInfected) throws ExecutionException, InterruptedException {
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(c.size());
         List<Future<Boolean>> threadList = new LinkedList<>();
         String[] nds = c.toArray(new String[0]);
-        if (possibility) {
-            // infect with lambda
+        if (shouldInfected < c.size()) {
+            // choose number of infected
+            double possibility = (double) shouldInfected / c.size();
             for (Map.Entry<Integer, Integer> entry : trunk) {
                 threadList.add(executor.submit(() -> {
                     for (int i = entry.getKey(); i <= entry.getValue(); i++) {
-                        if (rGenerator.get().nextDouble() <= lambda) {
+                        if (rGenerator.get().nextDouble() <= possibility) {
                             // Should be infected
                             Node nd = nodes.get(nds[i]);
                             nd.setStatus(Node.STATUS.INFECTIOUS);
@@ -338,25 +338,23 @@ public class Graph {
         }
 
         for (Future<Boolean> i : threadList) {
-            try {
-                i.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            i.get();
         } // Wait for execution
     }
 
     public List<Map.Entry<Integer, Integer>> truckByThread(int total) {
         List<Map.Entry<Integer, Integer>> l = new ArrayList<>();
-        int truckSize = total / numThread;
-        if (truckSize == 0) {
-            l.add(new AbstractMap.SimpleEntry<>(0, total));
-        } else {
-            for (int i = 0; i < numThread; i++) {
-                int begin = i * truckSize;
-                l.add(new AbstractMap.SimpleEntry<>(begin, begin + truckSize - 1));
+        if (total != 0) {
+            int truckSize = total / numThread;
+            if (truckSize == 0) {
+                l.add(new AbstractMap.SimpleEntry<>(0, total));
+            } else {
+                for (int i = 0; i < numThread; i++) {
+                    int begin = i * truckSize;
+                    l.add(new AbstractMap.SimpleEntry<>(begin, begin + truckSize - 1));
+                }
+                l.get(l.size() - 1).setValue(total - 1); // Always make up the rest using the last thread
             }
-            l.get(l.size() - 1).setValue(total - 1); // Always make up the rest using the last thread
         }
 
         return l;
@@ -398,6 +396,7 @@ public class Graph {
                 }
             }
             case BFS_K -> {
+                // Find a random node
                 int rand = rnd.nextInt(adjList.size());
                 Iterator<Node> itr = nodes.values().iterator();
                 for (int i = 0; i < rand - 1; i++) {
@@ -405,6 +404,10 @@ public class Graph {
                 }
                 Node node = itr.next();
                 node.setStatus(Node.STATUS.INFECTIOUS);
+                susceptibleCount.getAndDecrement();
+                infectedCount.getAndIncrement();
+
+                // Find the rest of the node
                 int temp = k - 1;
                 List<Node> l = new ArrayList<>();
                 for (String no : adjList.get(node.getName())) {

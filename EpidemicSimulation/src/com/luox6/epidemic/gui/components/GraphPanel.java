@@ -6,6 +6,7 @@ import com.luox6.epidemic.gui.models.UserSetting;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,19 +15,13 @@ import java.util.List;
 public class GraphPanel extends JPanel {
     private GUIController guiController;
     private XYChart chart = new XYChartBuilder().title("Epidemic Simulation").xAxisTitle("Ticks").yAxisTitle("Number").build();
-    JPanel chartPanel = new XChartPanel<>(chart);
+    JPanel chartPanel;
 
     public GraphPanel(GUIController guiController) {
         this.guiController = guiController;
-        setLayout(new GridLayout(1, 1));
-        add(chartPanel);
 
-        double [] initialX = new double[] { 1 ,2, 3, 4, 5};
-        double [] initialY = new double[] { 0, 0, 0, 0, 0};
-        chart.addSeries("Susceptible Count", initialX, initialY);
-        chart.addSeries("Infected Count", initialX, initialY);
-        chart.addSeries("Dead Count", initialX, initialY);
-        chart.addSeries("Recovered Count", initialX, initialY);
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+        chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
         chart.getStyler().setSeriesColors(new Color[] {
                 UserSetting.getSusceptibleColor(),
@@ -34,6 +29,26 @@ public class GraphPanel extends JPanel {
                 UserSetting.getDeadColor(),
                 UserSetting.getRecoveredColor()
         });
+
+        chart.getStyler().setZoomEnabled(true);
+        chart.getStyler().setToolTipsEnabled(true);
+//        chart.getStyler().setCursorEnabled(true);
+        chart.getStyler().setZoomResetByDoubleClick(true);
+        chart.getStyler().setZoomResetByButton(true);
+
+        // Placeholder data
+        double [] initialX = new double[] { 1 ,2, 3, 4, 5 };
+        double [] initialY = new double[] { 0, 0, 0, 0, 0 };
+        chart.addSeries("Susceptible Count", initialX, initialY);
+        chart.addSeries("Infected Count", initialX, initialY);
+        chart.addSeries("Dead Count", initialX, initialY);
+        chart.addSeries("Recovered Count", initialX, initialY);
+
+        // Chart need to be fully initialized then put
+        // into panel, or there may be paint conflict
+        chartPanel = new XChartPanel<>(chart);
+        setLayout(new GridLayout(1, 1));
+        add(chartPanel);
     }
 
     public void updateData(Collector collector) {
@@ -43,5 +58,7 @@ public class GraphPanel extends JPanel {
         chart.updateXYSeries("Infected Count", data.get(0), data.get(2), null);
         chart.updateXYSeries("Dead Count", data.get(0), data.get(3), null);
         chart.updateXYSeries("Recovered Count", data.get(0), data.get(4), null);
+        chartPanel.revalidate();
+        chartPanel.repaint();
     }
 }

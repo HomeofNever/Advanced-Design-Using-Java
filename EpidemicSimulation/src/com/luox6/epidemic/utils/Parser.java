@@ -26,6 +26,7 @@ public class Parser {
 
         Graph g = new Graph();
         g.initGraphData(ls);
+        g.init();
         return g;
     }
 }

@@ -2,6 +2,7 @@ package com.luox6.epidemic.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DataCollection {
     private List<Integer> infectedCount;
@@ -13,6 +14,7 @@ public class DataCollection {
 
     public DataCollection(Graph g) {
         graph = g;
+        graph.init();
         infectedCount = new ArrayList<>();
         recoveredCount = new ArrayList<>();
         deadCount = new ArrayList<>();
@@ -22,7 +24,7 @@ public class DataCollection {
         syncGraphData();
     }
 
-    public void simulate() {
+    public void simulate() throws ExecutionException, InterruptedException {
         graph.simulate();
         syncGraphData();
     }
@@ -81,10 +83,6 @@ public class DataCollection {
         return deadCount.get(deadCount.size() - 1);
     }
 
-    public Graph getGraph() {
-        return graph;
-    }
-
     public int getTick() {
         return graph.getTick();
     }
@@ -102,5 +100,19 @@ public class DataCollection {
         }
 
         return null;
+    }
+
+    /** Proxy of container **/
+    public void setInitialInfected(Graph.INITIAL_INFECTED_MODE m) {
+        // When setting initial Infected, we need to update the infected count as well
+        graph.setInitialInfected(m);
+        infectedCount.remove(0);
+        susceptibleCount.remove(0);
+        infectedCount.add(0, graph.getInfectedCount());
+        susceptibleCount.add(0, graph.getSusceptibleCount());
+    }
+
+    public boolean getInfected() {
+        return graph.getInfected();
     }
 }

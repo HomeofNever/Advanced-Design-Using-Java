@@ -5,16 +5,22 @@ import com.luox6.epidemic.gui.components.StatusPanel;
 import com.luox6.epidemic.model.DataCollection;
 import com.luox6.epidemic.model.Graph;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Collector {
     private Graph graph;
     private DataCollection dataCollection;
     private Thread simulate;
-    private StatusPanel.SIMULATION_STATUS status = StatusPanel.SIMULATION_STATUS.AWAIT_DATA;
+    private AtomicReference<StatusPanel.SIMULATION_STATUS> status;
 
     private GUIController guiController;
 
     public Collector(GUIController g) {
         guiController = g;
+        status = new AtomicReference<>(StatusPanel.SIMULATION_STATUS.AWAIT_DATA);
+        simulate = getNewThread();
+        simulate.start();
     }
 
     public DataCollection getDataCollection() {
@@ -22,38 +28,60 @@ public class Collector {
     }
 
     public void start() {
-        simulate.start();
-        status = StatusPanel.SIMULATION_STATUS.IN_PROGRESS;
+        status.compareAndSet(StatusPanel.SIMULATION_STATUS.READY, StatusPanel.SIMULATION_STATUS.IN_PROGRESS);
+        status.compareAndSet(StatusPanel.SIMULATION_STATUS.PAUSED, StatusPanel.SIMULATION_STATUS.IN_PROGRESS);
     }
 
     public void pause() {
-        simulate.interrupt();
-        status = StatusPanel.SIMULATION_STATUS.PAUSED;
-        simulate = getNewThread();
+        status.compareAndSet(StatusPanel.SIMULATION_STATUS.IN_PROGRESS, StatusPanel.SIMULATION_STATUS.PAUSED);
     }
 
     public StatusPanel.SIMULATION_STATUS getStatus() {
-        return status;
+        return status.get();
     }
 
     public void reset() {
         Graph cpg = new Graph(graph);
-        status = StatusPanel.SIMULATION_STATUS.READY;
+        // Init graph with parameters
+        cpg.setD(UserSetting.getValueD());
+        cpg.setK(UserSetting.getValueK());
+        cpg.setN(UserSetting.getValueN());
+        cpg.setLambda(UserSetting.getLambda());
+        cpg.setS(UserSetting.getValueS());
+        cpg.setT(UserSetting.getValueT());
+        cpg.setNumThread(UserSetting.getThread());
         dataCollection = new DataCollection(cpg);
-        simulate = getNewThread();
+        status.set(StatusPanel.SIMULATION_STATUS.READY);
     }
 
     private Thread getNewThread() {
         return new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                if (dataCollection.getTick() < UserSetting.getStep()) {
-                    // Do one per time, until interrupted or target reach
-                    // to ensure state integrity
-                    dataCollection.simulate();
+            while (true) {
+                if (status.get() == StatusPanel.SIMULATION_STATUS.IN_PROGRESS) {
+                    if (dataCollection.getTick() < UserSetting.getStep()) {
+                        // Do one per time, until interrupted or target reach
+                        // to ensure state integrity
+                        try {
+                            dataCollection.simulate();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        status.set(StatusPanel.SIMULATION_STATUS.FINISHED);
+                    }
                     guiController.updateGraphView();
                 } else {
-                    status = StatusPanel.SIMULATION_STATUS.FINISHED;
-                    break;
+                    /**
+                     * @TODO
+                     * It is actually better to submit to executor instead of wait,
+                     * but it is working anyway, so let's do it.
+                     * https://stackoverflow.com/a/19025596/13843585
+                     */
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -66,13 +94,13 @@ public class Collector {
     }
 
     public boolean isInitInfected() {
-        return getDataCollection().getGraph().getInfected();
+        if (getStatus() != StatusPanel.SIMULATION_STATUS.AWAIT_DATA)
+            return getDataCollection().getInfected();
+        else
+            return false;
     }
 
     public void setInitInfected(Graph.INITIAL_INFECTED_MODE m) {
-        if (isInitInfected()) {
-            throw new RuntimeException("Graph has infected!");
-        }
-        getDataCollection().getGraph().setInitialInfected(m);
+        getDataCollection().setInitialInfected(m);
     }
 }
