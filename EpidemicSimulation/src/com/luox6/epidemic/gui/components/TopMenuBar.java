@@ -8,20 +8,18 @@ public class TopMenuBar extends JMenuBar {
     /**
      * Controller Reference
      */
-    private GUIController controller;
-    private JMenu fileMenu;
-    private JMenu actionMenu;
+    private final GUIController controller;
 
     /* Menu Items */
-    private JMenuItem openFile;
-    private JMenuItem exitProgram;
-    private JMenuItem configuration;
+    private final JMenuItem openFile;
+    private final JMenuItem exitProgram;
+    private final JMenuItem configuration;
 
     public TopMenuBar(GUIController controller) {
         super();
         this.controller = controller;
-        fileMenu = new JMenu("File");
-        actionMenu = new JMenu("Actions");
+        JMenu fileMenu = new JMenu("File");
+        JMenu actionMenu = new JMenu("Actions");
         openFile = new JMenuItem("Open file...");
         exitProgram = new JMenuItem("Exit");
         configuration = new JMenuItem("Configuration");

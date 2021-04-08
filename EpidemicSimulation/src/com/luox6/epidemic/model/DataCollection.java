@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class DataCollection {
-    private List<Integer> infectedCount;
-    private List<Integer> recoveredCount;
-    private List<Integer> deadCount;
-    private List<Integer> susceptibleCount;
-    private List<Integer> ticks;
-    private Graph graph;
+    private final List<Integer> infectedCount;
+    private final List<Integer> recoveredCount;
+    private final List<Integer> deadCount;
+    private final List<Integer> susceptibleCount;
+    private final List<Integer> ticks;
+    private final Graph graph;
 
     public DataCollection(Graph g) {
         graph = g;
@@ -24,11 +28,19 @@ public class DataCollection {
         syncGraphData();
     }
 
+    /**
+     * Move one tick forward the simulation, and collect data
+     * @throws ExecutionException Exception happened during simulation
+     * @throws InterruptedException simulation thread interrupted
+     */
     public void simulate() throws ExecutionException, InterruptedException {
         graph.simulate();
         syncGraphData();
     }
 
+    /**
+     * Sync data from current graph state
+     */
     private void syncGraphData() {
         infectedCount.add(graph.getInfectedCount());
         recoveredCount.add(graph.getRecoveredCount());
@@ -37,10 +49,16 @@ public class DataCollection {
         ticks.add(getTick());
     }
 
-    public boolean checkIndex(int index) {
+    private boolean checkIndex(int index) {
         return index > -1 && index <= getTick();
     }
 
+    /**
+     * Get Simulation data by tick
+     * @param start start tick
+     * @param end end tick
+     * @return List of data point, [ticks[], susceptibleCount[], infectedCount[], deadCount[], recoveredCount[]]
+     */
     public List<List<Integer>> getDataByRange(int start, int end) {
         if (checkIndex(start)) {
             if (end == -1) {
@@ -61,6 +79,10 @@ public class DataCollection {
         return null;
     }
 
+    /**
+     * Get all possible data from current simulation
+     * @return See getDataByRange()
+     */
     public List<List<Integer>> getAllData() {
         return getDataByRange(0, getTick());
     }
@@ -85,21 +107,6 @@ public class DataCollection {
 
     public int getTick() {
         return graph.getTick();
-    }
-
-    public int[] getData(int index) {
-        if (checkIndex(index)) {
-            int[] res = new int[4];
-
-            res[0] = susceptibleCount.get(index);
-            res[1] = infectedCount.get(index);
-            res[2] = deadCount.get(index);
-            res[3] = recoveredCount.get(index);
-
-            return res;
-        }
-
-        return null;
     }
 
     /** Proxy of container **/

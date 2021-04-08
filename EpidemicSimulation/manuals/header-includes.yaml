@@ -1,0 +1,5 @@
+---
+header-includes: |
+  \usepackage{fontspec}
+  \setmonofont{DejaVu Sans}
+--- 

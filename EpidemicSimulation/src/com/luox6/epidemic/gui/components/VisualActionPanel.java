@@ -12,23 +12,22 @@ public class VisualActionPanel extends JPanel {
     /**
      * Controller Reference
      */
-    private GUIController controller;
+    private final GUIController controller;
 
     /* Components */
-    private JButton resetButton;
-    private JButton startButton;
-    private JButton pauseButton;
-    private JButton randomInfectButton;
-    private JButton BFSInfectButton;
-    private JButton degreeInfectButton;
-    private JButton settingButton;
-    private JToolBar toolBar;
+    private final JButton resetButton;
+    private final JButton startButton;
+    private final JButton pauseButton;
+    private final JButton randomInfectButton;
+    private final JButton BFSInfectButton;
+    private final JButton degreeInfectButton;
+    private final JButton settingButton;
 
     public VisualActionPanel(GUIController controller) {
         super();
         this.controller = controller;
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        toolBar = new JToolBar("Quick Actions", JToolBar.VERTICAL);
+        JToolBar toolBar = new JToolBar("Quick Actions", JToolBar.VERTICAL);
 
         add(toolBar);
         startButton = new JButton("Start");

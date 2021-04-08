@@ -2,6 +2,10 @@ package com.luox6.epidemic.model;
 
 import java.util.Objects;
 
+/**
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class Node {
     public enum STATUS {SUSCEPTIBLE, INFECTIOUS, RECOVERED, DEAD};
     private String name;

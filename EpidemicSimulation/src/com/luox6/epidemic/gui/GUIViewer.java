@@ -46,6 +46,7 @@ public class GUIViewer extends JFrame {
         super("Epidemic Simulation");
         this.guiController = guiController;
         setSize(1280, 720);
+        // Maximize Window
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH );
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Init Layout
@@ -89,7 +90,7 @@ public class GUIViewer extends JFrame {
     }
 
     private void setCenter() {
-        graphPanel = new GraphPanel(guiController);
+        graphPanel = new GraphPanel();
         mainPanel.add(graphPanel, BorderLayout.CENTER);
     }
 }

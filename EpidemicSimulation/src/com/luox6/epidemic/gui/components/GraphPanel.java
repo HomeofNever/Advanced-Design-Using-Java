@@ -13,12 +13,10 @@ import java.awt.*;
 import java.util.List;
 
 public class GraphPanel extends JPanel {
-    private GUIController guiController;
-    private XYChart chart = new XYChartBuilder().title("Epidemic Simulation").xAxisTitle("Ticks").yAxisTitle("Number").build();
+    private final XYChart chart = new XYChartBuilder().title("Epidemic Simulation").xAxisTitle("Ticks").yAxisTitle("Number").build();
     JPanel chartPanel;
 
-    public GraphPanel(GUIController guiController) {
-        this.guiController = guiController;
+    public GraphPanel() {
 
         chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
         chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
@@ -32,7 +30,6 @@ public class GraphPanel extends JPanel {
 
         chart.getStyler().setZoomEnabled(true);
         chart.getStyler().setToolTipsEnabled(true);
-//        chart.getStyler().setCursorEnabled(true);
         chart.getStyler().setZoomResetByDoubleClick(true);
         chart.getStyler().setZoomResetByButton(true);
 
@@ -51,6 +48,10 @@ public class GraphPanel extends JPanel {
         add(chartPanel);
     }
 
+    /**
+     * Update chart and repaint
+     * @param collector Collector model
+     */
     public void updateData(Collector collector) {
         List<List<Integer>> data = collector.getDataCollection().getAllData();
 

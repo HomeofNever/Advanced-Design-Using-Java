@@ -6,13 +6,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @author Xinhao Luo
+ * @version 0.0.1
+ */
 public class Graph {
     // enum
     public enum INITIAL_INFECTED_MODE {RANDOM_N, DEGREE_S, BFS_K}
 
     // nodes representation
-    private Map<String, HashSet<String>> adjList = new HashMap<>();
-    private Map<String, Node> nodes = new HashMap<>();
+    private final Map<String, HashSet<String>> adjList = new HashMap<>();
+    private final Map<String, Node> nodes = new HashMap<>();
 
     // parameters
     /**
@@ -61,7 +65,7 @@ public class Graph {
      */
     private int numThread = 1;
 
-    private ThreadLocal<Random> rGenerator;
+    private ThreadLocal<SplittableRandom> rGenerator;
 
     /**
      * Number of ticks current Graph has experienced
@@ -78,7 +82,7 @@ public class Graph {
      */
     private Boolean infected = false;
 
-    private Lock simulationLock = new ReentrantLock();
+    private final Lock simulationLock = new ReentrantLock();
 
     private ExecutorService executor;
 
@@ -158,7 +162,7 @@ public class Graph {
     }
 
     private void initSeedSetting() {
-        rGenerator = ThreadLocal.withInitial(() -> new Random(seed));
+        rGenerator = ThreadLocal.withInitial(() -> new SplittableRandom(seed));
     }
 
     private void initializeNode(String s) {
@@ -169,28 +173,6 @@ public class Graph {
         if (!adjList.containsKey(s)) {
             adjList.put(s, new HashSet<>());
         }
-    }
-
-    /**
-     * Get node count, including dead node
-     *
-     * @return node count
-     */
-    public int getNodeCount() {
-        return nodes.size();
-    }
-
-    /**
-     * Get edge count
-     *
-     * @return edge count
-     */
-    public int getEdgeCount() {
-        int ret = 0;
-        for (Node s : nodes.values()) {
-            ret += adjList.get(s.getName()).size();
-        }
-        return ret / 2;
     }
 
     /**
@@ -206,6 +188,7 @@ public class Graph {
 
         // Count how many nodes should be infected
         int nextInfected = (int) Math.ceil(infectedCount.get() * lambda);
+        // Only calculate neighbours when necessary
         Set<String> susList = getSusceptibleNeighbors();
         // Infect based on lambda, and update count accordingly
         infectNodes(susList, nextInfected);
@@ -215,6 +198,7 @@ public class Graph {
         simulationLock.unlock();
     }
 
+    /** Tool methods for Simulation **/
     private void tickNodes() throws ExecutionException, InterruptedException {
         String[] nds = adjList.keySet().toArray(new String[0]);
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(nds.length);
@@ -270,27 +254,54 @@ public class Graph {
         }
     }
 
-    public Set<String> getSusceptibleNeighbors() throws ExecutionException, InterruptedException {
+    private Set<String> getSusceptibleNeighbors() throws ExecutionException, InterruptedException {
+        if (susceptibleCount.get() == 0) {
+            return new HashSet<>();
+        }
         String[] nds = adjList.keySet().toArray(new String[0]);
         List<Map.Entry<Integer, Integer>> trunk = truckByThread(nds.length);
         List<Future<Set<String>>> threadList = new LinkedList<>();
-        for (Map.Entry<Integer, Integer> entry : trunk) {
-            threadList.add(executor.submit(() -> {
-                Set<String> ls = new HashSet<>();
-                for (int i = entry.getKey(); i <= entry.getValue(); i++) {
-                    Node nd = nodes.get(nds[i]);
-                    if (nd.getStatus() == Node.STATUS.INFECTIOUS) {
-                        for (String ns : adjList.get(nd.getName())) {
-                            Node.STATUS status = nodes.get(ns).getStatus();
-                            if (status != Node.STATUS.RECOVERED && status != Node.STATUS.INFECTIOUS) {
-                                ls.add(ns);
+
+        // Always find nodes from lower side
+        if (susceptibleCount.get() > infectedCount.get()) {
+            for (Map.Entry<Integer, Integer> entry : trunk) {
+                threadList.add(executor.submit(() -> {
+                    Set<String> ls = new HashSet<>();
+                    for (int i = entry.getKey(); i <= entry.getValue(); i++) {
+                        Node nd = nodes.get(nds[i]);
+                        if (nd.getStatus() == Node.STATUS.INFECTIOUS) {
+                            for (String ns : adjList.get(nd.getName())) {
+                                Node.STATUS status = nodes.get(ns).getStatus();
+                                if (status != Node.STATUS.RECOVERED && status != Node.STATUS.INFECTIOUS) {
+                                    ls.add(ns);
+                                }
                             }
                         }
                     }
-                }
 
-                return ls;
-            }));
+                    return ls;
+                }));
+            }
+        } else {
+            for (Map.Entry<Integer, Integer> entry : trunk) {
+                threadList.add(executor.submit(() -> {
+                    Set<String> ls = new HashSet<>();
+                    for (int i = entry.getKey(); i <= entry.getValue(); i++) {
+                        Node nd = nodes.get(nds[i]);
+                        if (nd.getStatus() == Node.STATUS.SUSCEPTIBLE) {
+                            for (String ns : adjList.get(nd.getName())) {
+                                Node.STATUS status = nodes.get(ns).getStatus();
+                                if (status == Node.STATUS.INFECTIOUS) {
+                                    ls.add(nds[i]);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    return ls;
+                }));
+            }
         }
 
         Set<String> res = new HashSet<>();
@@ -342,12 +353,18 @@ public class Graph {
         } // Wait for execution
     }
 
-    public List<Map.Entry<Integer, Integer>> truckByThread(int total) {
+    /**
+     * Trunk index by task number and item
+     * assume index start from 0 and end with total - 1
+     * @param total the number of total items needed to be trucked
+     * @return List of Pair<startIndex, endIndex>
+     */
+    private List<Map.Entry<Integer, Integer>> truckByThread(int total) {
         List<Map.Entry<Integer, Integer>> l = new ArrayList<>();
         if (total != 0) {
             int truckSize = total / numThread;
             if (truckSize == 0) {
-                l.add(new AbstractMap.SimpleEntry<>(0, total));
+                l.add(new AbstractMap.SimpleEntry<>(0, total - 1));
             } else {
                 for (int i = 0; i < numThread; i++) {
                     int begin = i * truckSize;
@@ -360,6 +377,10 @@ public class Graph {
         return l;
     }
 
+    /**
+     * Set graph initial infected mode and infect accordingly
+     * @param m infection mode
+     */
     public void setInitialInfected(INITIAL_INFECTED_MODE m) {
         infected = true;
         Random rnd = new Random(seed);
@@ -430,9 +451,7 @@ public class Graph {
                     }
                 }
             }
-            default -> {
-                throw new RuntimeException("Undefined Initialization process.");
-            }
+            default -> throw new RuntimeException("Undefined Initialization process.");
         }
     }
 

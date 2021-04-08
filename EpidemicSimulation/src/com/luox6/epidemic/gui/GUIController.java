@@ -19,13 +19,12 @@ public class GUIController {
     // Viewers
     protected GUIViewer guiViewer;
 
-    public GUIController() {
-    }
+    public GUIController() { }
 
     /**
      * Set reference of the Viewer object, for update purposes
      *
-     * @param guiViewer
+     * @param guiViewer guiViewer Instance
      */
     public void setGuiViewer(GUIViewer guiViewer) {
         this.guiViewer = guiViewer;
@@ -35,7 +34,7 @@ public class GUIController {
     /**
      * Application entry
      */
-    protected void start() {
+    public void start() {
         // Setting the frame visibility to true
         guiViewer.pack();
         guiViewer.setVisible(true);
@@ -74,7 +73,8 @@ public class GUIController {
                 Dialog.genericSuccessDialog(guiViewer, "Graph has loaded successfully!");
             }
         } catch (Exception e) {
-            Dialog.genericWarningDialog(guiViewer, e);
+            e.printStackTrace();
+            Dialog.genericWarningDialog(guiViewer, new Exception("Unable to load file, please check file format and try again."));
         }
     }
 
@@ -98,6 +98,7 @@ public class GUIController {
         guiViewer.statusPanel.updateSimulationStatus(collector.getStatus());
 
         guiViewer.statusPanel.updateSimulation(
+                collector.getElapsedTime() / 1000000,  // nano to ms
                 collector.getDataCollection().getTick(),
                 collector.getDataCollection().getCurrentSusceptibleCount(),
                 collector.getDataCollection().getCurrentInfectedCount(),
@@ -284,13 +285,24 @@ public class GUIController {
 
     public void infectButtonPressed(Graph.INITIAL_INFECTED_MODE m) {
         if (collector.isInitInfected()) {
-            Dialog.genericWarningDialog(guiViewer, new Exception("Graph has already init infected: reset to re-infected"));
+            Dialog.genericWarningDialog(guiViewer, new Exception("Graph has already init infected: reset to re-infect"));
         } else if (collector.getStatus() == StatusPanel.SIMULATION_STATUS.AWAIT_DATA){
             Dialog.genericWarningDialog(guiViewer, new Exception("Please load graph first!"));
         } else {
             collector.setInitInfected(m);
             updateGraphView();
             Dialog.genericSuccessDialog(guiViewer, "Infected set!");
+        }
+    }
+
+    public void setValueSeed(String text) {
+        try {
+            int i = Integer.parseInt(text);
+            UserSetting.setSeed(i);
+        } catch (NumberFormatException e) {
+            Dialog.numberParseDialog(guiViewer, e);
+        } finally {
+            guiViewer.configurationPanel.updateSettings();
         }
     }
 }

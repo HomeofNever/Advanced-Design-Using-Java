@@ -24,6 +24,7 @@ public class UserSetting {
         VALUE_D, // Double between 0-1, dead possibility
         VALUE_T, // Integer > 0 dead/recover ticks
         VALUE_LAMBDA, // Double > 0 # to infect = lambda * # of infected
+        VALUE_SEED,
         NUM_THREAD, // Number of thread
         NUM_STEP // step/tick to run
     }
@@ -57,11 +58,11 @@ public class UserSetting {
     }
 
     public static Color getDeadColor() {
-        return String2Color(prefs.get(keys.DEAD_COLOR.name(), Color2String(Color.RED)));
+        return String2Color(prefs.get(keys.DEAD_COLOR.name(), Color2String(Color.BLACK)));
     }
 
     public static Color getInfectedColor() {
-        return String2Color(prefs.get(keys.INFECTED_COLOR.name(), Color2String(Color.BLACK)));
+        return String2Color(prefs.get(keys.INFECTED_COLOR.name(), Color2String(Color.RED)));
     }
 
     public static Color getRecoveredColor() {
@@ -97,7 +98,11 @@ public class UserSetting {
     }
 
     public static int getStep() {
-        return prefs.getInt(keys.NUM_STEP.name(), 100);
+        return prefs.getInt(keys.NUM_STEP.name(), 50);
+    }
+
+    public static int getSeed() {
+        return prefs.getInt(keys.VALUE_SEED.name(), 96169);
     }
 
     public static void setSusceptibleColor(Color c) {
@@ -148,4 +153,6 @@ public class UserSetting {
     public static void setStep(int i) {
         prefs.putInt(keys.NUM_STEP.name(), i);
     }
+
+    public static void setSeed(int i) { prefs.putInt(keys.VALUE_SEED.name(), i);}
 }

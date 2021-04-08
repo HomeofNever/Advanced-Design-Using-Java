@@ -17,11 +17,17 @@ public class Parser {
      */
     public static Graph loadGraph(FileReader f) throws IOException {
         BufferedReader reader = new BufferedReader(f);
-        String line = null;
+        String line;
         List<Map.Entry<String, String>> ls = new LinkedList<>();
         while((line = reader.readLine()) != null) {
             String[] nodes = line.split(",");
-            ls.add(new AbstractMap.SimpleEntry<>(nodes[0], nodes[1]));
+            if (nodes.length > 2) {
+                for (int i = 1; i < nodes.length; i++) {
+                    ls.add(new AbstractMap.SimpleEntry<>(nodes[0], nodes[i]));
+                }
+            } else {
+                ls.add(new AbstractMap.SimpleEntry<>(nodes[0], nodes[1]));
+            }
         }
 
         Graph g = new Graph();
