@@ -1,15 +1,18 @@
 package com.luox6.FarmerMarket;
 
 import java.sql.*;
+import com.mchange.v2.c3p0.*;
 
 /**
  * ADT of a database
  */
 public class DB {
     private String host;
-    private String port;
+    private int port;
     private String user;
     private String password;
+    private String database;
+    private ComboPooledDataSource cpds = new ComboPooledDataSource();
 
     /**
      * Default constructor from host, port, user and password
@@ -19,65 +22,37 @@ public class DB {
      * @param user     user of database
      * @param password password of database
      */
-    public DB(String host, String port, String user, String password) {
+    public DB(String host, int port, String user, String password, String database) {
         this.host = host;
         this.port = port;
         this.user = user;
         this.password = password;
-    }
-
-    /**
-     * Check if database is connectable to db_name
-     *
-     * @param db_name name of database to connect
-     * @return boolean if database is connectable
-     */
-    public boolean isConnectable(String db_name) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        String URL = "jdbc:mysql://" + host + ":" + port + "/" + db_name;
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        this.database = database;
 
         try {
-            conn = DriverManager.getConnection(URL, user, password);
-            stmt = conn.createStatement();
-            stmt.close();
-            conn.close();
-            return true;
-        } catch (SQLException e) {
+            cpds.setDriverClass( "com.mysql.cj.jdbc.Driver" ); //loads the jdbc driver
+            cpds.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
+            cpds.setUser(user);
+            cpds.setPassword(password);
+            cpds.setMaxStatements( 180 );
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
     /**
-     * Execute cmd as query in database
-     *
-     * @param cmd query command
-     * @return ResultSet of the result of query
+     * Close data source
      */
-    public ResultSet runQuery(String cmd) {
-        String URL = "jdbc:mysql://" + host + ": " + port + "/farmer";
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+    public void close() {
+        cpds.close();
+    }
 
-        try {
-            conn = DriverManager.getConnection(URL, user, password);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(cmd);
-            return rs;
-        } catch (SQLException e) {
-            return null;
-        }
+    /** Get a connection from the pool
+     * @return Connection to the database
+     * @throws SQLException
+     */
+    public Connection getConnection() throws SQLException {
+        return cpds.getConnection();
     }
 
     /**
@@ -86,10 +61,10 @@ public class DB {
      * @param args arguments
      */
     public static void main(String[] args) {
-        DB db = new DB("localhost", "3306", "root", "example");
-        System.out.println(db.isConnectable("farmer"));
-        ResultSet rset = db.runQuery("SELECT * FROM data WHERE Youtube<>''");
-        try {
+        DB db = new DB("localhost", 3306, "root", "example", "farmer");
+        try(Connection c = db.getConnection()) {
+            // Unsafe, just for testing
+            ResultSet rset = c.createStatement().executeQuery("SELECT * FROM data WHERE Youtube<>''");
             int count = 0;
             while (rset.next()) {
                 String city = rset.getString("city");
@@ -97,8 +72,8 @@ public class DB {
                 count++;
             }
             System.out.println(count);
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
