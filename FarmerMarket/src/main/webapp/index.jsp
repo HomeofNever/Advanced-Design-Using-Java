@@ -11,7 +11,16 @@
     <title>Farmer Market</title>
 </head>
 <body>
-<a href="/index">View all farmers</a>
-<a href="/search">Search farmer</a>
+<h1>Farmer Market</h1>
+<p>Choose an action and get started!</p>
+<ul>
+   <li>
+       <a href="index">View all farmers</a>
+   </li>
+    <li>
+        <a href="search">Search farmer</a>
+    </li>
+</ul>
+
 </body>
 </html>

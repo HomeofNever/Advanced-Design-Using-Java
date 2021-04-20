@@ -29,7 +29,7 @@
         <tr>
             <td>Market Name</td>
             <td>
-                <a href="/detail?fmid=<%=f.getFMID()%>"><%= f.getMarketName() %></a>
+                <a href="../detail?fmid=<%=f.getFMID()%>"><%= f.getMarketName() %></a>
             </td>
         </tr>
         <tr>
@@ -65,6 +65,14 @@
                 No Website
                 <% } %>
             </td>
+        </tr>
+        <tr>
+            <td>Latitude</td>
+            <td><%=f.getY()%></td>
+        </tr>
+        <tr>
+            <td>Longitude</td>
+            <td><%=f.getX()%></td>
         </tr>
         <tr>
             <td>Rating (out of 5)</td>

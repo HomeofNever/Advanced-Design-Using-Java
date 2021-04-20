@@ -1,0 +1,53 @@
+# Setup
+
+This setup assume mysql and tomcat are configured properly. Please consult README.md for detail version
+
+## Database
+ 
+Import `data/farmer.sql` into database, this sql file will create a database called `farmer` and config accordingly. Please make sure login user has database creation permission and `farmer` database is available.
+
+Import command may be find here: https://dev.mysql.com/doc/refman/8.0/en/connecting.html , and here is an import command example, assuming user `root` and password `example`:
+
+```bash
+mysql -u root -h localhost --protocol TCP -pexample < data/farmer.sql
+```
+
+### Application database connection setting
+
+Application will use TCP protocol to connect to mysql, further setting located in `src/java/com/luox6/FarmerMarket/Config.java`  
+
+Please change the setting accordingly for host, port, user, password and database accordingly.
+
+## Maven
+
+This project is built with Maven, please get your system ready by following the guide here: https://maven.apache.org/install.html
+
+## Compile 
+
+Same for any system
+
+```bash
+mvn clean package
+```
+
+war file would be generated at `target/FarmerMarket-1.0-SNAPSHOT.war`, you may also find path in console output.
+
+### For javadoc
+
+```bash
+mvn javadoc:javadoc
+```
+
+site file would be generated at `target/site`, you may also find path in the console output.
+
+## Tomcat
+
+- find tomcat webapps folder `%CATALINA_HOME%\webapps` and paste the war file generated
+- rename the file e.g. market.war
+- go to tomcat bin folder and run `startup.sh run` or `%CATALINA_HOME%\bin\startup.bat` (windows)
+- access webpage via browser, local address should be http://localhost:{port}/{WAR_FILE_NAME}
+
+I have included a pre-compiled war file with database connection by default as a reference.
+
+
+ 

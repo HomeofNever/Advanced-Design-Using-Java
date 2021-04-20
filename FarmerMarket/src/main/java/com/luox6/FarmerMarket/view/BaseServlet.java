@@ -5,6 +5,9 @@ import com.luox6.FarmerMarket.DB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+/**
+ * BaseServlet extended by others
+ */
 public class BaseServlet extends HttpServlet {
     protected DB db;
 

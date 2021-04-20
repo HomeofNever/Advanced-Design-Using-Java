@@ -1,5 +1,8 @@
 package com.luox6.FarmerMarket;
 
+/**
+ * Config of Application
+ */
 public class Config {
     public static final String DB_ADDRESS = "localhost";
     public static final int DB_PORT = 3306;

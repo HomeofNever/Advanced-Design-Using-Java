@@ -34,7 +34,7 @@
         <% for (Farmer f : ls) { %>
             <tr>
                 <td>
-                    <a href="/detail?fmid=<%=f.getFMID()%>"><%= f.getMarketName() %></a>
+                    <a href="../detail?fmid=<%=f.getFMID()%>"><%= f.getMarketName() %></a>
                 </td>
                 <td>
                     <%= f.getCity() %>

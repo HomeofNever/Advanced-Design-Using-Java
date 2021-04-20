@@ -14,6 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+/**
+ * Search page Controller
+ */
 @WebServlet(name = "searchServlet", value = "/search")
 public class SearchServlet extends BaseServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

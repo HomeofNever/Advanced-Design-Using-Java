@@ -72,6 +72,14 @@ public class Farmer {
         return rating;
     }
 
+    public String getX() {
+        return x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
     /** allow external rate setting **/
     public void setRating(double rating) {
         this.rating = rating;

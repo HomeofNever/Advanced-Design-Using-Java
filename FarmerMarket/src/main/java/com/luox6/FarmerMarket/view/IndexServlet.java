@@ -14,6 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+/**
+ * Index page Controller
+ */
 @WebServlet(name = "indexServlet", value = "/index")
 public class IndexServlet extends BaseServlet {
     private int PAGE_LIMIT = 25;

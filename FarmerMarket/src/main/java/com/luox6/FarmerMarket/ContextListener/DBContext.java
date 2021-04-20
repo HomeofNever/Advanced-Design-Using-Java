@@ -7,6 +7,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+/**
+ * This class used to init database connection for servlet
+ */
 public class DBContext implements ServletContextListener {
     private final DB db = new DB(Config.DB_ADDRESS, Config.DB_PORT, Config.DB_USER, Config.DB_PASSWORD, Config.DB_DATABASE);;
 

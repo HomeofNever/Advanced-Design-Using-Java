@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.1.0
 -- https://www.phpmyadmin.net/
--- https://dev.mysql.com/doc/refman/8.0/en/connecting.html
+-- 
 -- 主机： db
 -- 生成日期： 2021-04-17 09:56:58
 -- 服务器版本： 8.0.23
@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `farmer`
 --
-CREATE DATABASE IF NOT EXISTS `farmer1` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `farmer1`;
+CREATE DATABASE IF NOT EXISTS `farmer` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `farmer`;
 
 DELIMITER $$
 --
