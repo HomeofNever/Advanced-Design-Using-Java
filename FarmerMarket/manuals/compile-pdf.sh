@@ -1,0 +1,1 @@
+pandoc header-includes.yaml manual.md -o manual.pdf --pdf-engine=lualatex
