@@ -1,0 +1,6 @@
+import './vue'
+import './bootstrap'
+import './axios'
+import './toasted'
+import './uuid'
+import './vee-validate'

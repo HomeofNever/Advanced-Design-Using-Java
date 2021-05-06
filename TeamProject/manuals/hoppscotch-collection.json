@@ -1,0 +1,427 @@
+[
+  {
+    "name": "My Collection",
+    "folders": [],
+    "requests": []
+  },
+  {
+    "name": "lineup",
+    "folders": [
+      {
+        "name": "User",
+        "requests": [
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/register",
+            "method": "POST",
+            "auth": "None",
+            "httpUser": "",
+            "httpPassword": "",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": "test"
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": "testtesttest"
+              }
+            ],
+            "rawParams": "{\n  \"username\": \"test\",\n  \"password\": \"testtesttest\"\n}",
+            "rawInput": false,
+            "contentType": "application/json",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Register",
+            "collection": 0
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/me",
+            "method": "GET",
+            "auth": "Basic Auth",
+            "httpUser": "test",
+            "httpPassword": "testtesttest",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": "test"
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": "testtesttest"
+              }
+            ],
+            "rawParams": "{\n  \"username\": \"test\",\n  \"password\": \"testtesttest\"\n}",
+            "rawInput": true,
+            "contentType": "",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Self",
+            "collection": 0
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/update",
+            "method": "POST",
+            "auth": "Basic Auth",
+            "httpUser": "test",
+            "httpPassword": "testtesttest",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "displayName",
+                "value": "Michael Luo"
+              },
+              {
+                "active": true,
+                "key": "status",
+                "value": "Available"
+              }
+            ],
+            "rawParams": "{\n  \"displayName\": \"Michael Luo\",\n  \"status\": \"Available\"\n}",
+            "rawInput": true,
+            "contentType": "application/json",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Update",
+            "collection": 0
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/events",
+            "method": "GET",
+            "auth": "Basic Auth",
+            "httpUser": "test",
+            "httpPassword": "testtesttest",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": "test"
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": "testtesttest"
+              }
+            ],
+            "rawParams": "{\n  \"username\": \"test\",\n  \"password\": \"testtesttest\"\n}",
+            "rawInput": true,
+            "contentType": "",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "user events",
+            "collection": 0
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/register",
+            "method": "POST",
+            "auth": "None",
+            "httpUser": "",
+            "httpPassword": "",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": null
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": "password123456"
+              }
+            ],
+            "rawParams": "{\n  \"username\": null,\n  \"password\": \"password123456\"\n}",
+            "rawInput": true,
+            "contentType": "application/json",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Register_null_username",
+            "collection": 1
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/register",
+            "method": "POST",
+            "auth": "None",
+            "httpUser": "",
+            "httpPassword": "",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": "test2"
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": null
+              }
+            ],
+            "rawParams": "{\n  \"username\": \"test2\",\n  \"password\": null\n}",
+            "rawInput": true,
+            "contentType": "application/json",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Register_null_password",
+            "collection": 1
+          },
+          {
+            "url": "http://localhost:8080",
+            "path": "/user/register",
+            "method": "POST",
+            "auth": "None",
+            "httpUser": "",
+            "httpPassword": "",
+            "passwordFieldType": "password",
+            "bearerToken": "",
+            "headers": [],
+            "params": [],
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "username",
+                "value": "test1"
+              },
+              {
+                "active": true,
+                "key": "password",
+                "value": "TestPassword"
+              }
+            ],
+            "rawParams": "{\n  \"username\": \"test1\",\n  \"password\": \"TestPassword\"\n}",
+            "rawInput": true,
+            "contentType": "application/json",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "name": "Register_Duplicate_Users",
+            "collection": 1
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Event",
+        "requests": [
+          {
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testevent"
+              }
+            ],
+            "headers": [],
+            "path": "/event/create",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "bearerToken": "",
+            "requestType": "",
+            "contentType": "application/json",
+            "url": "http://localhost:8080",
+            "name": "create events",
+            "method": "POST",
+            "httpUser": "test",
+            "passwordFieldType": "password",
+            "collection": 0,
+            "rawInput": true,
+            "params": [],
+            "rawParams": "{\n  \"name\": \"testevent\"\n}",
+            "httpPassword": "testtesttest",
+            "preRequestScript": "// pw.env.set('variable', 'value');"
+          },
+          {
+            "collection": 0,
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "passwordFieldType": "password",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "name": "update event",
+            "path": "/event/1/update",
+            "url": "http://localhost:8080",
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testevent1"
+              },
+              {
+                "active": true,
+                "key": "token",
+                "value": "abcde"
+              }
+            ],
+            "headers": [],
+            "method": "POST",
+            "httpUser": "test",
+            "params": [],
+            "httpPassword": "testtesttest",
+            "bearerToken": "",
+            "rawParams": "{\n  \"name\": \"testevent1\",\n  \"token\": \"abcde\"\n}",
+            "contentType": "application/json",
+            "rawInput": true
+          },
+          {
+            "collection": 0,
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "passwordFieldType": "password",
+            "requestType": "",
+            "preRequestScript": "// pw.env.set('variable', 'value');",
+            "name": "add queue",
+            "path": "/event/1/queue/add",
+            "url": "http://localhost:8080",
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testqueue"
+              }
+            ],
+            "headers": [],
+            "method": "POST",
+            "httpUser": "test",
+            "params": [],
+            "httpPassword": "testtesttest",
+            "bearerToken": "",
+            "rawParams": "{\n  \"name\": \"testqueue\"\n}",
+            "contentType": "application/json",
+            "rawInput": true
+          },
+          {
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testevent"
+              }
+            ],
+            "headers": [],
+            "path": "/event/1",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "bearerToken": "",
+            "requestType": "",
+            "contentType": "",
+            "url": "http://localhost:8080",
+            "name": "get event",
+            "method": "GET",
+            "httpUser": "test",
+            "passwordFieldType": "password",
+            "collection": 0,
+            "rawInput": true,
+            "params": [],
+            "rawParams": "{\n  \"name\": \"testevent\"\n}",
+            "httpPassword": "testtesttest",
+            "preRequestScript": "// pw.env.set('variable', 'value');"
+          },
+          {
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testevent"
+              }
+            ],
+            "headers": [],
+            "path": "/event/1/assistants",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "bearerToken": "",
+            "requestType": "",
+            "contentType": "",
+            "url": "http://localhost:8080",
+            "name": "get assistant",
+            "method": "GET",
+            "httpUser": "test",
+            "passwordFieldType": "password",
+            "collection": 0,
+            "rawInput": true,
+            "params": [],
+            "rawParams": "{\n  \"name\": \"testevent\"\n}",
+            "httpPassword": "testtesttest",
+            "preRequestScript": "// pw.env.set('variable', 'value');"
+          },
+          {
+            "auth": "Basic Auth",
+            "bodyParams": [
+              {
+                "active": true,
+                "key": "name",
+                "value": "testevent"
+              }
+            ],
+            "headers": [],
+            "path": "/event/1/assistant/test1",
+            "testScript": "// pw.expect('variable').toBe('value');",
+            "bearerToken": "",
+            "requestType": "",
+            "contentType": "application/json",
+            "url": "http://localhost:8080",
+            "name": "add assistant",
+            "method": "POST",
+            "httpUser": "test",
+            "passwordFieldType": "password",
+            "collection": 0,
+            "rawInput": true,
+            "params": [],
+            "rawParams": "",
+            "httpPassword": "testtesttest",
+            "preRequestScript": "// pw.env.set('variable', 'value');"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "queue",
+        "requests": [],
+        "folders": []
+      },
+      {
+        "name": "line",
+        "requests": [],
+        "folders": []
+      }
+    ],
+    "requests": [],
+    "collectionIndex": 0
+  }
+]
