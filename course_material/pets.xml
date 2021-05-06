@@ -1,0 +1,35 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="SortPets.xsl"?>
+
+<pets>
+  <pet type="cat" age=".8" gender="F" ageyears="" agemonths="0.8">
+    <breed>Moggie</breed>
+    <color>black</color>
+    <name>Alberta</name>
+    <weight />
+  </pet>
+  <pet type="cat" age="18" gender="M" ageyears="1.5" agemonths="">
+    <breed>Burmese</breed>
+    <color>blue</color>
+    <name>TrueBlue</name>
+    <weight>11.5</weight>
+  </pet>
+  <pet type="bird" age="408" gender="M" ageyears="34" agemonths="">
+    <breed>Sulpher Crested Cockatoo</breed>
+    <color>white</color>
+    <name>Max</name>
+    <weight>7</weight>
+  </pet>
+  <pet type="dog" age="11" gender="M" ageyears="" agemonths="11">
+    <breed>Collie</breed>
+    <color>golden</color>
+    <name>Gendarme</name>
+    <weight>10</weight>
+  </pet>
+  <pet type="cat" age="72" gender="M" ageyears="6" agemonths="">
+    <breed>Burmese</breed>
+    <color>white</color>
+    <name>Snowflake</name>
+    <weight>7</weight>
+  </pet>
+</pets>

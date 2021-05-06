@@ -1,0 +1,24 @@
+.wy-side-nav-search {
+    background-color: #00B0F0;
+}
+
+.nav-search-background-color {
+    nav-search-color: #DC143C;
+}
+
+.nav-background-color {
+    color: #DC143C;
+    background-color: #DC143C;
+}
+
+.wy-nav-content {
+    max-width: 1200px !important;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: normal;
+}
+
+.strike {
+  text-decoration: line-through;
+}

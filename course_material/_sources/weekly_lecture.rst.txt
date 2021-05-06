@@ -1,0 +1,14 @@
+
+Advanced Design Using Java Weekly Lecture Schedule - Spring 2021
+================================================================
+
+Lecture Times and Location
+--------------------------
+
+Pre-recorded lectures are posted on `Course Mediasite Channel <https://mediasite.mms.rpi.edu/Mediasite5/Channel/app_java_s21>`_. Live lectures are conducted via WebEx Teams.
+
+All times listed assume EST/EDT timezone unless noted otherwise.
+
+.. image::
+   _images/LectureHours.png
+

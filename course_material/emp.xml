@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="https://www.cs.rpi.edu/academics/courses/spring21/csci4960/emp.xsl"?>
+
+<employees xmlns:au="http://www.demotest.com">
+	<employee>	
+		<name>Adam Stein</name> 
+		<salary>23500</salary>
+		<jobtitle>Programmer</jobtitle>
+		<region>Redmond</region>
+	</employee>
+	<employee>	
+		<name>Susan Tjarnberg</name> 
+		<salary>51000</salary>
+		<jobtitle>Tester</jobtitle>
+		<region>Minneapolis</region>
+	</employee>
+	<employee>	
+		<name>Catherine Turner</name> 
+		<salary>45000</salary>
+		<jobtitle>System Architect</jobtitle>
+		<region>Dallas</region>
+	</employee>
+	<employee>	
+		<name>Wendy Vasse</name> 
+		<salary>72000</salary>
+		<jobtitle>Project Manager</jobtitle>
+		<region>Washington D.C.</region>
+	</employee>
+	<employee>	
+		<name>Paula Thurman</name> 
+		<au:salary>34500</au:salary>
+		<jobtitle>Programmer</jobtitle>
+		<region>Sydney</region>
+	</employee>
+	<employee>	
+		<name>Richard Marshall</name> 
+		<au:salary>30000</au:salary>
+		<jobtitle>Programmer</jobtitle>
+		<region>Canberra</region>
+	</employee>
+</employees>

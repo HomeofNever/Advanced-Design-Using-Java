@@ -1,0 +1,54 @@
+.. Application Design Using Java Spring 2021 documentation master file, created by
+   sphinx-quickstart on Mon Jan  8 13:02:28 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Application Design Using Java - Spring 2021
+======================================================
+
+.. toctree::
+   :maxdepth: 1
+
+   Frequently Answered Questions about Application Design Using Java <faq>
+
+   Weekly lecture schedule <weekly_lecture>
+
+   Weekly office hours schedule <weekly_oh>
+
+   Schedule, notes, reading <lecture_notes>
+   
+   Practice Problems <practice>
+   
+   Homework assignments <assignments>
+
+
+
+External links
+--------------
+
+- Course syllabus <http://www.cs.rpi.edu/academics/courses/spring21/csci4960/syllabus.htm>
+
+- We will use Submitty Forum for posting questions/answers related to class, lectures, and homework assignments. <https://submitty.cs.rpi.edu/courses/s21/csci4960/forum>
+
+- Homework submission server & grades <https://submitty.cs.rpi.edu/courses/s21/csci4960>
+
+- Mediasite server channel with all lecture videos  <https://mediasite.mms.rpi.edu/Mediasite5/Channel/app_java_s21>
+
+
+
+Teaching Staff
+--------------
+
++-----------------------------------+---------------------------------------------------------------------+
+|   .. image::                      | **Konstantin Kuzmin:** Instructor                                   |
+|      _images/Konstantin.jpg       |   | Office Hours:  Mon., Thurs. 2:10 pm - 3:30 pm EST/EDT           |
+|                                   |   | Office: Amos Eaton 112                                          |
+|                                   |   | Email: appjavastaff@cs.lists.rpi.edu, kmkuzmin@gmail.com        |
+|                                   |                                                                     |
++-----------------------------------+---------------------------------------------------------------------+
+|   .. image::                      | **Maoyu Wang:** Undergraduate Mentor                                |
+|      _images/maoyu-photo.png      |   | Office Hours:  Fri. 12:00 pm - 2:00 pm  EST/EDT                 |
+|                                   |   | Email: appjavastaff@cs.lists.rpi.edu, wangm16@rpi.edu           |
+|                                   |                                                                     |
++-----------------------------------+---------------------------------------------------------------------+
+

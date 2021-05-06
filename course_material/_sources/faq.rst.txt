@@ -1,0 +1,13 @@
+
+Frequently asked questions about CSCI-4960 Application Design Using Java
+========================================================================
+
+**Instructor**: Konstantin Kuzmin
+
+I put together some answers to common questions regarding
+CSCI-4960 Application Design Using Java class in general.
+
+Is this course Communication Intensive (CI)?
+--------------------------------------------
+
+Yes, this course has been officially designated as Communication Intensive (CI). All students currently enrolled in CSCI-4960 Application Design Using Java as well as all students who previously took any version of this course under various course numbers and names (CSCI 4960 or CSCI 4963, Advanced Programming Using Java, Application Programming Using Java, or Application Design Using Java) are automatically considered taking (or having taken in an earlier semester) a Communication Intensive (CI) course for their CS major. More information about the Communication Intensive requirement can be found at https://info.rpi.edu/registrar/academic-planning .

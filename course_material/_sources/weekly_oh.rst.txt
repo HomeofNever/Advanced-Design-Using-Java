@@ -1,0 +1,18 @@
+
+
+Weekly Office Hours Schedule - Spring 2021
+==========================================
+
+Instructor Office Hours
+-----------------------
+
+- Dr. Kuzmin's office hours are Monday and Thursday 2:10 pm - 3:30 pm EST/EDT
+
+
+TA / Mentor Hours
+-----------------
+
+All times listed assume EST/EDT timezone unless noted otherwise.
+
+.. image::
+   _images/OfficeHours.png

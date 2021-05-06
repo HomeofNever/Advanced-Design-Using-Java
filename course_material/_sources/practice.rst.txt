@@ -1,0 +1,244 @@
+Practice Problems
+=================
+
+.. _Lecture1:
+
+Lecture 1
+`````````
+
+None.
+
+.. _Lecture2:
+
+Lecture 2-3
+```````````
+
+Consider the following practice problems. For all problems, use Javadoc to document all classes and methods. Make sure to follow coding conventions. For each program, provide a script (command, batch) file that would compile and execute your Java code, as well as compile all Javadoc comments into HTML documentation. Write a short readme.txt file explaining how to use the script files.
+
+#. Create a console application that interacts with a user by allowing them to enter commands and performs requested actions. A command is a single character (case insensitive). The following commands should be implemented: 
+
+	.. table:: 
+		:widths: 10 90
+
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Command   | Action                                                                                                                                             |
+		+===========+====================================================================================================================================================+
+		| N         | Prompt user to enter a natural number (can be binary, octal, decimal or hexadecimal, using standard Java notation). If the entered value is not a  |
+		|           | valid natural number, print a message and complete execution of the command. Otherwise, store the value in a variable and then print its value     |
+		|           | and the type of numbers to which it belongs (e.g., 2 ∈ℕ).                                                                                          |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Z         | Prompt user to enter an integer number (can be binary, octal, decimal or hexadecimal, using standard Java notation). If the entered value is not a |
+		|           | valid integer number, print a message and complete execution of the command. Otherwise, store the value in a variable and then print its value     |
+		|           | and the type of numbers to which it belongs (e.g., -2 ∈ℤ).                                                                                         |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Q         | Prompt user to enter a rational number (can be binary, octal, decimal or hexadecimal, using standard Java notation) as two components (an integer  |
+		|           | and a non-zero integer). If the entered value is not a valid rational number, print a message and complete execution of the command. Otherwise,    |
+		|           | store the value in a single variable and then print its value (using four digits after decimal point) and the type of numbers to which it belongs  |
+		|           | (e.g., -0.7142857142857 ∈ℚ)                                                                                                                        |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| X         | Exit the application                                                                                                                               |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+
+	A prompt should be printed to indicate that the application is ready to take a command. After a command is executed, the application should be ready to take the next command, unless the last command was to exit. You will need to use a ``do`` loop and ``switch`` statement in your program.
+	
+	Experiment by running the program and entering different numbers. What values can be successfully represented by your chosen data types? What happens when you enter a value which is too large to be represented? What are potential solutions to this problem?
+
+#. Create an application that interacts with a user by allowing them to enter commands and performs requested actions. A command is a word (one or more characters with no whitespace between them, case insensitive). The following commands should be implemented: 
+
+	.. table:: 
+		:widths: 10 90
+
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Command   | Action                                                                                                                                             |
+		+===========+====================================================================================================================================================+
+		| Add       | Prompt user to select data types for each of the two decimal numbers and then enter numbers themselves. If any entered value is not a valid number,|
+		|           | print a message and complete execution of the command. Otherwise, add two numbers and print the value of the result.                               |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Sub       | Prompt user to select data types for each of the two decimal numbers and then enter numbers themselves. If any entered value is not a valid number,|
+		|           | print a message and complete execution of the command. Otherwise, subtract the second number from the first one and print the value of the result. |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Neg       | Prompt user to select data type and then enter a number. If entered value is not a valid number, print a message and complete execution of the     |
+		|           | command. Otherwise, print the opposite of the number entered by the user.                                                                          |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Mul       | Prompt user to select data types for each of the two decimal numbers and then enter numbers themselves. If any entered value is not a valid number,|
+		|           | print a message and complete execution of the command. Otherwise, multiply two numbers and print the value of the result.                          |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Div       | Prompt user to select data types for each of the two decimal numbers and then enter numbers themselves. If any entered value is not a valid number,|
+		|           | print a message and complete execution of the command. Otherwise, divide the first numbers by the second one and print the value of the result.    |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+		| Exit      | Exit the application                                                                                                                               |
+		+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+
+	A prompt should be printed to indicate that the application is ready to take a command. After a command is executed, the application should be ready to take the next command, unless the last command was to exit. Users should be able to select from the following data types: ``byte``, ``char``, ``short``, ``int``, ``long``, ``float``, ``double``, ``BigInteger``, and ``BigDecimal``. If an operation is binary, user should be allowed to chose different data types for each of the operands.
+	
+	Experiment by running the program and entering different numbers and data types. What happens if an input value is too large to be represented using a requested data type? What happens if each of the operands can be represented using requested data types but the result of the operation can not? What data type is used for the result?
+	
+#. Create an application which allows user to specify a graph by entering indices of non-zero elements from the adjacency matrix. Represent all graph information as a two dimensional array where each row corresponds to a node (one row from the adjacency matrix) and each element within the row corresponds to a node adjacent to this node. (You may assume the graph is unweighted and directed; at most one edge is allowed between any two given nodes; reflexive edges are allowed.) For this problem, use only standard Java arrays (not collections) and do not store zero elements. After user enters all information about a graph, the program should compute and print the following statistics:
+
+	* average in-degree and average out-degree (in-degree of a node is the number of incoming edges; out-degree is the number of outgoing edges)
+	* degree sequence (monotonic nonincreasing sequence of node degrees), assuming an undirected graph obtained from the initial directed graph by treating each edge as undirected and eliminating duplicate edges
+	* degree distribution (each degree value is associated with the fraction of nodes in the graph with this degree), assuming an undirected graph obtained from the initial directed graph by treating each edge as undirected and eliminating duplicate edges
+
+.. _Lecture4:
+
+Lecture 4-5
+```````````
+
+Take the MyCalculator application and devise the testing plan, testing strategy, use cases, and test cases. Perform the testing according to your plan and produce all necessary deliverables (e.g., fill in all test case documents, etc.)
+
+.. _Lecture7:
+
+Lecture 7-8
+```````````
+
+#. Design a GUI front-end application for data entry/modification/query. The application should be designed to work with the following data entities (properties are shown in parentheses):
+	* Student (RIN, first name, last name, middle name, preferred name, photo, date of birth, address, phone, major(s), courses taken and in progress, grades)
+	* Courses (CRN, title, department, credit hours, capacity, semester, syllabus, instructor(s), text books, prerequisites, a list of students enrolled and their grades)
+	* Instructors (RIN, first name, last name, middle name, date of birth, address, phone, department(s), courses taught and currently teaching)
+
+	The application should allow users to view, enter, and modify all data, ensuring the validity of all values. The following lookup methods should be made available for all entries:
+		* By unique ID (RIN, CRN, etc.)
+		* By matching/partial matching of a single field (e.g., by last name, first name, title, etc.)
+
+	In addition, the application should allow users to go through entries sequentially (forward and backward). The application should provide the feature to save data to a file and read data from a file. It should also support some common queries and statistics, like computing GPA for a student, the average grade for a class, the number of credit hours for a given department during a given semester, etc. (implement several queries that you think make sense for these data).
+
+#. Create a single-window GUI application with the following components:
+	* A text field which allows a user to enter the number of shapes
+	* A radio button which allows a user to select one of the shapes (e.g., circle, square, star, etc.)
+	* A visual component for displaying shapes
+	* A ``Run`` button that starts the animation
+	* A ``Reset`` button that resets the application to the initial state
+
+	When ``Run`` button is activated, a specified number of shapes is drawn at random locations in the shape visualization component. Then shapes start to move (select some reasonable values for the speed and acceleration), bouncing off of the sides of the component's bounding rectangle.
+
+#. Create a single-window GUI application that tries to "escape" from the user. Whenever mouse pointer is over any part of the window, the window repositions itself so that no part of the window is under the mouse. Make sure to provide a hot key that would enable a user to quit the application.
+
+#. Create a single-window GUI application for computing the area under the curve using the Riemann sum method. Implement a top-level window (frame) with the following components:
+	* A radio button that allows a user to select one of the predefined functions
+	* Two text boxes that allow a user to specify endpoints
+	* A button to compute the area under the curve
+	* A visual component to plot the function between the given endpoints
+	* A label to display the value of the area under the curve
+
+.. _Lecture10:
+
+Lecture 10-11
+`````````````
+
+#. Implement a network client that requests a resource (e.g., HTML file) from a remote server, prints the first ``n`` (a configurable parameter) characters to the console, and saves the entire resource file locally as a file.
+
+#. Implement a network server which responds to the clients with the server name, OS name and version, and current server date, time and time zone. Make the port number configurable at server startup.
+
+#. Implement a client-server data application. Take your data entry/modification/query application from :ref:`Lecture 7-8 <Lecture7>` and turn it into a data service (daemon). In order to do that, add a server component to the code and disable the GUI interface. This application will now act only as a server by accepting connections from the clients and fulfilling their requests. Write a client GUI application that sends queries to the server and displays results to the user.
+	The following queries should be supported:
+		* Request all data (including GPA) for a student by student RIN, change any of that data, or create a new student entry
+		* Request all data for an instructor by instructor RIN, change any of that data, or create a new instructor entry
+		* Request all data about a course by CRN, change any of that data, or create a new course entry
+		* Request a grade histogram for a given course
+		* Enter grades for all students enrolled in a particular course
+		* Change an instructor for a particular course that has not yet started
+
+#. Review the code for the client-server data application from above and update it with proper assertions and exceptions. Design your own exception classes in cases where none of the standard exception class fit the task.
+
+#. Implement logging for the network server which responds to the clients with the server name, OS name and version, and current server date, time and time zone from practice exercises for :ref:`Lecture 10-11 <Lecture10>`. Log detailed information about every client that connects to the server.
+
+.. _Lecture12:
+
+Lecture 12-13
+`````````````
+
+#. Update your client-server applications from practice exercises for :ref:`Lecture 10-11 <Lecture10>`, so that the server part is now able to process multiple clients concurrently using threads. Limit the number of threads to avoid slowing down the system when there are substantially more threads than processors.
+
+#. Modify your graph application from practice exercises for :ref:`Lecture 2 <Lecture2>` so that it can read graph information from a file (use a CSV standard adjacency list format [1]). Then change your code to ensure that graph statistics (measures) are computed concurrently by as many threads as there are processors on your computer. Each thread should get an approximately equal share of graph nodes for processing.
+
+[1] "CSV Format," 2020, Accessed on: July 12, 2020. [Online]. Available: https://gephi.org/users/supported-graph-formats/csv-format/
+
+.. _Lecture14:
+
+Lecture 14
+``````````
+
+#. Modify your graph application from practice exercises for :ref:`Lecture 12-13 <Lecture12>` so that it measures the time taken to perform all computations on the graph. Report to the user both the wall clock time for the entire computation and thread time statistics (fastest and slowest thread time, average thread time and the standard deviation of thread running times). Perform weak and strong scaling experiments. For the strong scaling study, make sure to vary the number of threads from 1 to at least twice the number of processors/cores in your system. Write a report which includes timing plots for all experiments, as well as plots with parallel performance and speedup data. Include in the report a brief analysis of what can be seen in the plots and why they turned out the way they did and how these data should be interpreted.
+
+.. _Lecture15:
+
+Lecture 15
+``````````
+
+#. Update your data entry/modification/query from practice exercises for :ref:`Lecture 10-11 <Lecture10>`, so that all configurable parameters (e.g., file paths and names, default sorting order, etc.) are stored and retrieved using Java Preferences API. Make sure all parameters have default values which will be used if a configuration file is not found.
+
+.. _Lecture18:
+
+Lecture 18
+``````````
+
+#. Use servlets to create a Java EE application that asks the user for their first name ad last name and then shows two different messages/pages depending on whether this last and first name have been seen by the application before. For example, if the name is new, the page might say "Hello, John Doe! Welcome to our Web server.", and if the name has been used before the message would say "Hello, John Doe! Glad you are back." Make sure that you deploy your application and make it accessible to the users.
+#. Use Java Server Pages to create a Java EE application that obtains one of the datasets from `Data.gov <https://www.data.gov/>`_ (e.g., you can use `Consumer Complaint Database <https://catalog.data.gov/dataset/consumer-complaint-database#topic=consumer_navigation>`_) and then provides a Web page that users can access to view this data (you may use filtering or only show a subset of the data to keep your Web page small). Use XML as the data format to download data from the source and store it inside your Web application. Make sure that you deploy your application and make it accessible to the users.
+
+.. _Lecture21:
+
+Lecture 21
+``````````
+
+Install MySQL. Make sure that you have ``world`` database installed.
+
+#. Use the ``Reverse Engineer`` feature of MySQL Workbench to create an entity--relationship diagram for the ``world`` database installed with MySQL.
+
+#. Write SQL queries to perform the following tasks on the the ``world`` database installed with MySQL:
+
+   - Using ``count``, get the number of cities in the USA.
+   - Find out what the population and average life expectancy for people in Argentina (ARG) is.
+   - Using ``IS NOT NULL``, ``ORDER BY``, ``LIMIT``, what country has the highest life expectancy?
+   - Using ``LEFT JOIN``, ``ON``, what is the capital of Spain (ESP)?
+   - Using ``LEFT JOIN``, ``ON``, list all the languages spoken in the 'Southeast Asia' region.
+   - Select 25 cities around the world that start with the letter 'F' in a single SQL query.
+
+#. Load data from Data.gov into MySQL tables and run a query on them:
+
+   - Create a new database (schema) called ``colleges``.
+   - Load data from `College Affordability and Transparency List Explanation Form, 2016–17 <https://catalog.data.gov/dataset/college-affordability-and-transparency-list-explanation-form-201617>`_ into a table in the ``colleges`` schema.
+   - Load data from `The Database of Accredited Postsecondary Institutions and Programs <https://ope.ed.gov/accreditation/GetDownloadFile.aspx>`_ into a table in the ``colleges`` schema.
+   - Write a query to output the states and average college tuition amounts with states that have the most expensive colleges, on average, on top and states with least expensive colleges in the bottom.
+   - Write a query that prints names and addresses of ten most expensive colleges in the nation.
+
+#. Create a GUI application which allows the user to browse information on available airline routes. (Data can be downloaded from `OpenFlights <https://openflights.org/data.html>`_ .) The user should be provided with a way to select the names of two cities which they are interested in. After selecting the cities, the user may click a "Show in Google Maps" button for any of the two cities to open a Web browser window showing the airport in the corresponding city. The program will also show all available routes between two selected cities.
+
+..
+  .. _Lecture8:
+
+  Lecture 8
+  `````````
+  #. Using Eclipse, generate a UML diagram for the Employee and Manager classes (Core Java, ch. 4 -- 5).
+
+  #. Create a UML class diagram for a hierarchy of interfaces and classes that models some real-world objects and relationships between them. You may chose your favorite domain. (E.g., car components, cars, drivers, etc. or students, instructors, classes, and grades, etc.) In your model try to capture as many features of the domain as practical.
+
+    Explore different types of relationships (inheritance, association, aggregation, composition). Make sure to capture behavioral aspects as interfaces. Design all necessary interfaces and classes. Then generate Java code for the UML diagram that you created. Edit the code to create a working application that demonstrates the usage of your model. You will need to provide implementations for all non-abstract methods that you defined in your model, as appropriate. At the minimum, you should also implement methods ``equals``, ``hashCode``, ``clone``, and ``toString``. To save time, you may implement specific operations so that they simply print a message with the corresponding action (e.g., "Car{id: 12, maker: "Ford", model: "Mustang"} driven by Driver{first: "J", last: "K"} accelerates by 20 mph.")
+
+  .. _Lecture5:
+
+  Lecture 5
+  `````````
+
+  #. Implement a custom collection with the following features:
+    * Supports elements of any type
+    * Elements in the collection are ordered
+    * Duplicate elements are permitted (anywhere in the collection)
+    * Duplicate elements are stored only once
+    * Efficient implementation of an insertion of a new element (and removal of an element) at arbitrary location within the collection
+    * Efficient implementation of the reversal of the order of elements
+    * Data stored in a collection is persistent (stored in a file as part of the collection implementation)
+
+
+  .. _Lecture10:
+
+  Lecture 10
+  ``````````
+
+  #. Rewrite your custom collection from :ref:`Lecture 5 <Lecture5>` to use generics. Make sure that some methods of your collection implement bounded type parameters and wildcard types.
+
+  .. _Lecture23:
+
+  Lecture 23
+  ``````````
+
+  #. Define a marker annotation called @Test, specifying that it can be applied to methods and that it should be available at runtime. Write a simple testing framework in Java which receives the name of a Java class to test and then runs all methods from this class which are tagged with the @Test annotation. For each method, if it did not throw an exception, consider the test to be passed. Otherwise, count it as failed. After running all tests, print out the statistics of successful and failed test methods.
